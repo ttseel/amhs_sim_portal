@@ -1,0 +1,27 @@
+h3 {
+  padding-top: 96px;
+  font-size: 40px;
+  line-height: 66px;
+  color: black;
+  letter-spacing: -1px;
+}
+
+h3 img {
+  display: inline-block;
+  width: 40px;
+  padding-right: 10px;
+  vertical-align: middle;
+  padding-bottom: 5px;
+}
+
+h3 em {
+  display: inline-block;
+  font-style: normal;
+}
+
+.main {
+  position: relative;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-bottom: 182px;
+}

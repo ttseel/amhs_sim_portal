@@ -1,0 +1,352 @@
+
+
+<!doctype html>
+<html lang="ko">
+<head>   
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge" >
+
+            <meta property="og:title" content="카카오 영입" />
+        <meta property="og:description" content="카카오 영입" />
+        <meta property="og:site_name" content="카카오 영입">
+        <meta property="og:type" content="website" />
+        <meta content='http://t1.daumcdn.net/comis/jobs/images/logo/meta_career.png' property='og:image'>
+
+    
+    <meta name="csrf-token" content="97cceecb-61a4-4cc0-8935-d584dba0e0d1"/>
+    <title>카카오 영입</title>
+
+    <link rel="shortcut icon" href="https://t1.daumcdn.net/comis/common/images/favicon_64x64.ico">
+    <link rel="stylesheet" type="text/css" href="/styles/common.css?v=210930014002">
+    <link rel="stylesheet" type="text/css" href="/styles/modified.css?v=210930014002">
+    <link rel="stylesheet" type="text/css" href="/webjars/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+
+    <link rel="stylesheet" type="text/css" href="/webjars/slick-carousel/1.8.1/slick/slick.css">
+    <link rel="stylesheet" type="text/css" href="/webjars/slick-carousel/1.8.1/slick/slick-theme.css">
+
+
+    
+        <script type="text/javascript" src="/staticFiles/libs.js?v=210930014002"></script>
+
+    
+    <script type="text/javascript">
+                                Raven.config('https://eb755c8c306e4ac793db1bd2b9c4f898@aem-collector.daumkakao.io/4742').install({release:'210930014002'});
+                            $(function() {
+            $(document).ajaxSend(function (e, xhr, options) {
+                xhr.setRequestHeader("X-CSRF-TOKEN", "97cceecb-61a4-4cc0-8935-d584dba0e0d1");
+            });
+
+          // 푸터영역 동작 스크립트 시작
+          const footContainer = $('.footer_career');
+          const toggleTarget = footContainer.find('.wrap_select .btn_toggle');
+
+          toggleTarget.on('click', selectBoxToggle);
+
+          footContainer.mouseup(function(e) {
+            const eventTarget = e.target;
+            if (!toggleTarget.is(eventTarget) && toggleTarget.has(eventTarget).length === 0 && !$(eventTarget).hasClass('opt_box') && eventTarget.nodeName !== "A") {
+              toggleTarget.parent().removeClass('open');
+            }
+          });
+
+          checkIe();
+
+          function selectBoxToggle() {
+            $(event.target).parent().toggleClass('open');
+          }
+          // 푸터영역 동작 스크립트 끝
+
+          // 헤더 영역 동작 스크립트 시작
+          $('.header_career .nav_gnb .list_gnb .btn_toggle').on('click', function(event) {
+            $(event.target).siblings('.list_depth').toggleClass('active')
+          });
+
+          $('.header_career .inner_header .user_info').on('click', function() {
+            $(event.target).siblings('.login_info').toggleClass('active');
+            return false;
+          });
+          // 헤더 영역 동작 스크립트 끝
+        });
+                // var _tiq = 'undefined' !== typeof _tiq ? _tiq : []; // Global Variables
+        // _tiq.push(['__clickOn']);
+        // _tiq.push(['__trackPageview']);
+        // (function(d) {
+        //     var se = d.createElement('script'); se.type = 'text/javascript'; se.async = true;
+        //     se.src = location.protocol + '//m2.daumcdn.net/tiara/js/td.min.js';
+        //     var s = d.getElementsByTagName('head')[0]; s.appendChild(se);
+        // })(document);
+    </script>
+    <script type="text/javascript" src="/scripts/pc.js?v=210930014002"></script>
+    <script type="text/javascript" src="/scripts/common.js?v=210930014002"></script>
+    <script type="text/javascript" src="//t1.daumcdn.net/tiara/js/v1/tiara.min.js"></script>
+    <script>
+        TiaraTracker.getInstance()
+                .setSvcDomain('careers.kakao.com')
+                .setPage('카카오 영입')
+                .trackPage('카카오 영입')
+                .track();
+
+    </script>
+    <!--[if lt IE 9]>
+<script src="https://s1.daumcdn.net/svc/original/U03/cssjs/es-shims/es5-shim-4.0.3.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="/webjars/slick-carousel/1.8.1/slick/slick.min.js"></script>
+<script type="text/javascript">
+  $(function(){
+    $('.slide_banner').slick({
+      infinite: true,
+      autoplay: true,
+      autoplaySpeed: 5000,
+      dots: true,
+      arrows: false,
+    });
+
+    var keyVisualPagingTypeMap = new Map();
+                  keyVisualPagingTypeMap.set('slick-slide-control00', 'WHITE')
+          
+    if (keyVisualPagingTypeMap.get('slick-slide-control00') == 'DARK') {
+      $('.slick-dots').addClass("type_dark");
+    }
+
+    $('.slick-dots li button').on('click', function(e){
+      if (keyVisualPagingTypeMap.get(e.currentTarget.id) == 'DARK') {
+        $('.slick-dots').addClass("type_dark");
+      } else {
+        $('.slick-dots').removeClass("type_dark");
+      }
+    });
+
+
+    var cardListEl = $('.card_list');
+    var cardBundleEl = cardListEl.find('.bundle_card');
+    var moreBtn = cardListEl.find('.btn_more');
+    moreBtn.on('click', function() {
+      cardBundleEl.find('a.hide').slice(0, 3).removeClass('hide');
+      if(cardBundleEl.find('a.hide').length === 0) {
+        moreBtn.remove();
+      }
+    })
+  })
+</script>
+
+</head>
+<body class="ko">
+<div id="kakaoIndex">
+    <a href="#kakaoBody">본문 바로가기</a>
+    <a href="#kakaoGnb">메뉴 바로가기</a>
+</div>
+
+<div id="kakaoWrap" >
+      <header id="kakaoHead" class="header_career">     <div class="inner_header">
+      <h1 class="tit_header">
+        <a href="/index" id="kakaoServiceLogo" class="link_logo">
+          <img src="/images/renew/img_logo.png" alt="kakao 영입" class="img_logo">
+        </a>
+      </h1>
+      <nav id="kakaoGnb" class="nav_gnb">
+        <h2 class="screen_out">메인 메뉴</h2>
+        <ul class="list_gnb">
+                          <li>
+                                      <a href="/kakaolife">카카오 생활</a>
+                                </li>
+                          <li>
+                                      <a href="/krewstory">크루 이야기</a>
+                                </li>
+                          <li>
+                                      <a href="/jobs">진행중공고</a>
+                                </li>
+                          <li>
+                                      <button type="button" class="btn_toggle">지원안내</button>
+                    <ul class="list_depth">                                                   <li>
+                            <a href="/process">영입절차</a>
+                          </li>
+                                                  <li>
+                            <a href="/faq">자주묻는 질문</a>
+                          </li>
+                                                  <li>
+                            <a href="/pool">인재풀 등록</a>
+                          </li>
+                                                  <li>
+                            <a href="/notice">공지사항</a>
+                          </li>
+                                            </ul>
+                                </li>
+                          <li>
+                                      <a href="/resume">나의지원서</a>
+                                </li>
+                    </ul>
+      </nav>
+      <a  href="/login?url=/index"  class="link_login ico_jobs_af
+  ">
+       로그인
+  </a> <h2 class="screen_out">로그인 정보</h2>
+<div class="login_info">
+  <strong class="tit_name">$utils.getMessage('applicant_name', $!{applicant.name})</strong>         
+    
+                <p class="desc_apply">
+            작성한 지원서가 없습니다.<br>
+        </p>
+        <a href="/resume/agreement" class="link_write ico_jobs_af">지원서 작성</a><br>
+
+      <a href="/my/info/check/password" class="link_info">기본정보</a>   <a href="/logout" class="link_logout">로그아웃</a> </div>    </div>
+  </header>
+  <hr class="hide">
+    
+    <!-- kakaoContent -->
+    <main id="kakaoContent" class="cont_main">
+  <div id="cSub">
+
+        <div class="slide_banner">                                                 <div>
+              <a href="#"  class="item_slick" style="background:url('https://t1.kakaocdn.net/career_public/keyVisual/20210929/pc/KV_2x.jpeg') 0 0 /cover no-repeat"><span class="screen_out">메인 키비주얼 (디폴트)</span></a>
+            </div>
+                            </div>
+  </div>
+  <div id="cMain" class="wrap_main">
+          <div id="mSub" class="intro_main">
+        <strong class="tit_main">Join the krew</strong>
+        <p class="desc_main">카카오 크루는 우리의 일상을 더 좋게 만들고 싶은 멋진 동료입니다.<br>다양한 생각을 자유롭게 나누며, 언제나 놀라운 결과를 만들어내죠.<br>당신도 세상을 바꾸고 싶나요? 카카오로 오세요!!</p>
+      </div>
+    
+    <article id="mArticle" class="info_main">
+      <h2 id="kakaoBody" class="screen_out">영입사이트 메인 본문</h2>
+              <h3 class="tit_info ico_jobs_bf">관심있는 공고를 찾아보세요</h3>
+      <div class="bundle_tag">
+                                <a href="https://careers.kakao.com/jobs?part=TECHNOLOGY"  target="_blank"   ># 테크</a>
+                      <a href="https://careers.kakao.com/jobs?part=BUSINESS_SERVICES"  target="_blank"   ># 서비스비즈</a>
+                      <a href="https://careers.kakao.com/jobs?part=DESIGN/BRAND_MARKETING"  target="_blank"   ># 디자인</a>
+                      <a href="https://careers.kakao.com/jobs?part=DESIGN/BRAND_MARKETING"  target="_blank"   ># 브랜드</a>
+                      <a href="https://careers.kakao.com/jobs?part=STAFF"  target="_blank"   ># 스태프</a>
+                </div>
+      <ul class="list_more">
+        <li>
+          <strong class="tit_more">기술과 사람으로 더 나은 세상을 만듭니다.</strong>
+          <a href="/kakaolife" class="link_more ico_jobs_af">카카오 문화 바로가기</a>
+          <img src="https://t1.kakaocdn.net/career_public/images/img_culture.png" alt="카카오 문화">
+        </li>
+                <li>
+            <a href="/krewstory"  target="_blank"                class="link_more ico_jobs_bf ico_story">
+              <strong class="tit_more">100% 리얼 스토리<br>카카오 크루 이야기</strong>
+              <span class="txt_more ico_jobs_af">크루 이야기 살펴보기</span>
+            </a>
+        </li>
+                <li>
+            <a href="/kakaolife"  target="_blank"                class="link_more ico_jobs_bf ico_support">
+              <strong class="tit_more">휴가부터 의료지원까지<br>크루 복지와 혜택</strong>
+              <span class="txt_more ico_jobs_af">크루 혜택 알아보기</span>
+            </a>
+        </li>
+                <li>
+            <a href="/process"  target="_blank"                class="link_more ico_jobs_bf ico_apply">
+              <strong class="tit_more">카카오 합류를 위한 <br>영입절차</strong>
+              <span class="txt_more ico_jobs_af">영입절차 확인하기</span>
+            </a>
+        </li>
+              </ul>
+              <h3 class="tit_info">더 많은 크루 소식이 있어요</h3>
+      <div class="card_list">
+        <div class="bundle_card">
+                                      <a href="https://brunch.co.kr/@andkakao/227"  target="_blank"  >
+                <span class="bg_card" style="background:url(https://t1.kakaocdn.net/career_public/feedCard/20210928/pc/1.png) 0 0 /cover no-repeat"></span>
+                <strong class="tit_card">2022 신입개발자 공채 오버뷰</strong>
+                <span class="txt_sub">#브런치</span>
+              </a>
+                          <a href="https://brunch.co.kr/@andkakao/229 "  target="_blank"  >
+                <span class="bg_card" style="background:url(https://t1.kakaocdn.net/career_public/feedCard/20210928/pc/2.png) 0 0 /cover no-repeat"></span>
+                <strong class="tit_card">2022 신입 개발자 공채 7개 공동체 영입과정 미리보기</strong>
+                <span class="txt_sub">#브런치</span>
+              </a>
+                          <a href="https://www.youtube.com/watch?v=aXwXVCcGBb4"  target="_blank"  >
+                <span class="bg_card" style="background:url(https://t1.kakaocdn.net/career_public/feedCard/20210928/pc/5.png) 0 0 /cover no-repeat"></span>
+                <strong class="tit_card">대학생이 궁금한 2022 카카오 신입개발자 공채 이야기</strong>
+                <span class="txt_sub">#유튜브</span>
+              </a>
+                          <a href="https://tech.kakao.com/2021/08/24/techtalk-08-mm/ "  target="_blank"   class="hide">
+                <span class="bg_card" style="background:url(https://t1.kakaocdn.net/career_public/feedCard/20210928/pc/7.png) 0 0 /cover no-repeat"></span>
+                <strong class="tit_card">Techtalk – 음(mm)으로 시작하는 크고 작은 ‘개발’ 이야기</strong>
+                <span class="txt_sub">#테크블로그</span>
+              </a>
+                          <a href="https://www.youtube.com/watch?v=sUx3eOPvBi4 "  target="_blank"   class="hide">
+                <span class="bg_card" style="background:url(https://t1.kakaocdn.net/career_public/feedCard/20210928/pc/4.png) 0 0 /cover no-repeat"></span>
+                <strong class="tit_card">카카오 뷰를 바라보는, 카카오의 시선</strong>
+                <span class="txt_sub">#유튜브</span>
+              </a>
+                          <a href="https://www.youtube.com/watch?v=cXEIOr1hiOM "  target="_blank"   class="hide">
+                <span class="bg_card" style="background:url(https://t1.kakaocdn.net/career_public/feedCard/20210928/pc/6.png) 0 0 /cover no-repeat"></span>
+                <strong class="tit_card">카카오 크루가 가족에게 전하는 서비스 이야기</strong>
+                <span class="txt_sub">#유튜브</span>
+              </a>
+                          <a href="https://tech.kakao.com/2021/05/24/jyami/ "  target="_blank"   class="hide">
+                <span class="bg_card" style="background:url(https://t1.kakaocdn.net/career_public/feedCard/20210928/pc/3.png) 0 0 /cover no-repeat"></span>
+                <strong class="tit_card">뉴크루의 백엔드 개발자 이야기</strong>
+                <span class="txt_sub">#테크블로그</span>
+              </a>
+                    </div>
+                      <button type="button" class="btn_more ico_jobs_af">크루 콘텐츠 더보기</button>
+                </div>
+    </article>
+  </div>
+  <aside id="cEtc" class="aside_banner">     <h2 class="screen_out">관련정보</h2>
+    <a href="http://www.kakaocorp.com" class="link_kakao" style="background: #27348b url(https://t1.kakaocdn.net/career_public/images/img_aside.png) calc(100% - 96px) 50% /370px auto no-repeat" target="_blank">
+      <strong class="tit_banner">오늘의 카카오가 궁금하다면?</strong>
+      <span class="txt_banner ico_jobs_af">기업사이트 바로가기</span>
+    </a>
+  </aside>
+
+</main>
+
+
+    <!-- // kakaoContent -->
+
+    <hr class="hide">
+
+        <footer id="kakaoFoot" class="footer_career">
+      <h2 class="screen_out">서비스 이용 정보</h2>
+      <div class="inner_footer">
+        <strong class="tit_footer">카카오의 다양한 소식을 확인하세요</strong>
+        <em class="screen_out">소셜 페이지 목록</em>
+        <ul class="list_social">
+                          <li>
+                <a href="https://pf.kakao.com/_rehCxd" target="_blank" class="ico_jobs ico_kakaotalk">카카오톡</a>
+              </li>
+                          <li>
+                <a href="https://www.instagram.com/kakao_career/?hl=ko" target="_blank" class="ico_jobs ico_instagram">인스타그램</a>
+              </li>
+                          <li>
+                <a href="https://www.youtube.com/channel/UCBjvBJgIp3NGkrTBEfWBUVw" target="_blank" class="ico_jobs ico_youtube">유튜브</a>
+              </li>
+                          <li>
+                <a href="https://www.linkedin.com/company/kakaocorp" target="_blank" class="ico_jobs ico_linkedin">링크드인</a>
+              </li>
+                          <li>
+                <a href="https://www.facebook.com/kakaocareers" target="_blank" class="ico_jobs ico_facebook">페이스북</a>
+              </li>
+                    </ul>
+        <div class="area_info">
+          <div class="info_use">
+                            <a href="https://www.kakaocorp.com/policy/privacyPolicy/corporateSitePrivacyPolicy" target="_blank" class="link_info">개인정보처리방침</a>
+                <a href="https://careers.kakao.com/etc/agreement" target="_blank" class="link_info">이용약관</a>
+                        <div class="wrap_select">
+              <button type="button" class="btn_toggle ico_jobs_af"><span class="screen_out">언어선택</span>한국어</button>
+              <div class="opt_box">
+                  <a href="/index?lang=en" class="item_opt en">English</a>
+                  <a href="/index?lang=ko" class="item_opt">한국어</a>
+              </div>
+            </div>
+            <small class="txt_copyright">&copy; Kakao Corp. All rights reserved.</small>
+          </div>
+          <div class="info_relation wrap_select">
+            <button type="button" class="btn_toggle ico_jobs_af">관련사이트<span class="screen_out">모음</span></button>
+            <div class="opt_box">
+              <a href="https://www.kakaocorp.com/" target="_blank" class="ico_jobs_af item_opt">카카오</a>
+              <a href="https://www.daum.net/" target="_blank" class="ico_jobs_af item_opt">다음 포털사이트</a>
+              <a href="https://www.kakao.com/main" target="_blank" class="ico_jobs_af item_opt">카카오 서비스</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+</div>
+
+<!-- // kakaoFoot -->
+</body>
+</html>
