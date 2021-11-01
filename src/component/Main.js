@@ -9,14 +9,14 @@ import Eqp from "./masterdata/Eqp";
 import Step from "./masterdata/Step";
 import WaferInputs from "./masterdata/WaferInputs";
 import EmptyPage from "./EmptyPage";
-import "./Main.css";
+import "./common/Title.css";
 
 const Main = () => {
   return (
     <div className="main">
       <Switch>
         <Route exact path="/">
-          <h3>Main</h3>
+          <h3 className="sub_title">Home</h3>
         </Route>
         <Route path="/sendanalysis/sendNetwork">
           <Sendfab />

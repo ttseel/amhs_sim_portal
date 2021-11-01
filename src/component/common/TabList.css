@@ -1,0 +1,32 @@
+.tab_list_wrapper {
+  font-size: 25px;
+}
+
+.tab_list {
+  position: relative;
+  display: inline-block;
+}
+
+.tab_list li {
+  display: inline-block;
+  list-style: none;
+  margin: 10px 5px 0 0;
+}
+
+.tab_list a {
+  background-color: rgb(238, 238, 238);
+  font-size: 16px;
+  height: 44px;
+  padding: 0 20px;
+  line-height: 43px;
+  border-radius: 25px;
+}
+
+.tab_list a:hover {
+  background-color: peachpuff;
+  border-radius: 25px;
+}
+
+.tab_list a.on {
+  background-color: peachpuff;
+}

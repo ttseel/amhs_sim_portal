@@ -1,11 +1,3 @@
-h3 {
-  padding-top: 96px;
-  font-size: 40px;
-  line-height: 66px;
-  color: black;
-  letter-spacing: -1px;
-}
-
 h3 img {
   display: inline-block;
   width: 40px;
@@ -24,4 +16,14 @@ h3 em {
   max-width: 1400px;
   margin: 0 auto;
   padding-bottom: 182px;
+}
+
+.sub_title {
+  margin-top: 50px;
+  margin-bottom: 20px;
+  padding-top: 46px;
+  font-size: 40px;
+  line-height: 66px;
+  color: black;
+  letter-spacing: -1px;
 }

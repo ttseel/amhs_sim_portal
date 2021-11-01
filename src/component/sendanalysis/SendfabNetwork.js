@@ -1,9 +1,10 @@
 import React from "react";
+import "../common/Title.css";
 
 const SendfabNetwork = () => {
   return (
     <div>
-      <h3>SendfabNetwork</h3>
+      <h3 className="sub_title">SendfabNetwork</h3>
     </div>
   );
 };
