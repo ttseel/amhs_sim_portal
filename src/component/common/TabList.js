@@ -41,14 +41,12 @@ const TabList = ({ styleName, tabList }) => {
       {tabNames.map((eachTab, index) => {
         // console.log(index);
         return (
-          <li>
-            <EachTab
-              tabName={eachTab}
-              link="/sendanalysis/sendNetwork"
-              selectTab={tabState[eachTab]}
-              changeTabMethod={changeTabState}
-            ></EachTab>
-          </li>
+          <EachTab
+            tabName={eachTab}
+            link="/sendanalysis/sendNetwork"
+            selectTab={tabState[eachTab]}
+            changeTabMethod={changeTabState}
+          ></EachTab>
         );
       })}
     </ul>
