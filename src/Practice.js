@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-const Hello = (name) => {
+const Hello = name => {
   if (!name) {
     return;
   }

@@ -6,6 +6,7 @@
   position: relative;
   display: inline-block;
   margin: 0;
+  padding-left: 15px;
 }
 
 .tab_list li {
@@ -24,10 +25,12 @@
 }
 
 .tab_list a:hover {
-  background-color: peachpuff;
+  font-weight: bold;
+  background-color: bisque;
   border-radius: 25px;
 }
 
 .tab_list a.on {
-  background-color: peachpuff;
+  font-weight: bold;
+  background-color: bisque;
 }

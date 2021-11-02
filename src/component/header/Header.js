@@ -1,6 +1,6 @@
-import React from "react";
-import "./Header.css";
-import { Link } from "react-router-dom";
+import React from 'react';
+import './Header.css';
+import {Link} from 'react-router-dom';
 const Header = () => {
   return (
     <header className="header">
@@ -17,9 +17,7 @@ const Header = () => {
               <a className="main_menu_a">층/동간 KPI 분석</a>
               <ul className="sub_menu">
                 <li>
-                  <Link to="/sendanalysis/sendNetwork">
-                    층/동간 반송량 Trend
-                  </Link>
+                  <Link to="/sendanalysis/sendNetwork">층/동간 반송량 Trend</Link>
                 </li>
                 <li>
                   <Link to="/sendanalysis/contStep">연속 Step</Link>
@@ -28,9 +26,7 @@ const Header = () => {
                   <Link to="/sendanalysis/lotSize">Lot Size</Link>
                 </li>
                 <li>
-                  <Link to="/sendanalysis/validateTrs">
-                    Lot Trace 반송량 검증
-                  </Link>
+                  <Link to="/sendanalysis/validateTrs">Lot Trace 반송량 검증</Link>
                 </li>
               </ul>
             </li>

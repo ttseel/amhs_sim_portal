@@ -1,15 +1,15 @@
-import React from "react";
-import { Route, Switch } from "react-router-dom";
-import Sendfab from "./sendanalysis/Sendfab";
-import ContStep from "./sendanalysis/ContStep";
-import LotSize from "./sendanalysis/LotSize";
-import ValidateLotTrace from "./sendanalysis/ValidateLotTrace";
-import Arrange from "./masterdata/Arrange";
-import Eqp from "./masterdata/Eqp";
-import Step from "./masterdata/Step";
-import WaferInputs from "./masterdata/WaferInputs";
-import EmptyPage from "./EmptyPage";
-import "./common/Title.css";
+import React from 'react';
+import {Route, Switch} from 'react-router-dom';
+import Sendfab from './sendanalysis/Sendfab';
+import ContStep from './sendanalysis/ContStep';
+import LotSize from './sendanalysis/LotSize';
+import ValidateLotTrace from './sendanalysis/ValidateLotTrace';
+import Arrange from './masterdata/Arrange';
+import Eqp from './masterdata/Eqp';
+import Step from './masterdata/Step';
+import WaferInputs from './masterdata/WaferInputs';
+import EmptyPage from './EmptyPage';
+import './common/Title.css';
 
 const Main = () => {
   return (

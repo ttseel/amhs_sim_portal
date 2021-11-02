@@ -1,5 +1,5 @@
-import React from "react";
-import "../common/Title.css";
+import React from 'react';
+import '../common/Title.css';
 
 const LotSize = () => {
   return (
