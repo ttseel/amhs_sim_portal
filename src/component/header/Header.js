@@ -9,9 +9,8 @@ const Header = () => {
           <Link className="home_img" to="/">
             amhs sim portal
           </Link>
-          {/* <a className="home_img" href="./">amhs sim portal</a> */}
         </h1>
-        <nav>
+        <nav className="header-nav">
           <ul className="main_menu">
             <li className="main_menu_li">
               <a className="main_menu_a">층/동간 KPI 분석</a>

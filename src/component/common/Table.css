@@ -1,0 +1,27 @@
+/* div {
+  height: 400;
+  width: '100%';
+} */
+
+.MuiDataGrid-iconButtonContainer div {
+  flex-direction: row;
+}
+
+.MuiDataGrid-iconButtonContainer:hover {
+  width: 100;
+  display: flex;
+}
+
+.MuiDataGrid-iconButtonContainer {
+  width: 0;
+  display: flex;
+  visibility: hidden;
+}
+
+.MuiDataGrid-root .MuiDataGrid-columnHeader--alignRight .MuiDataGrid-columnHeaderDraggableContainer div {
+  flex-direction: row;
+}
+
+.MuiDataGrid-root .MuiDataGrid-columnHeaderTitleContainer {
+  padding: 0;
+}

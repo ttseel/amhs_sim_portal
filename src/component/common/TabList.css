@@ -31,6 +31,7 @@
 }
 
 .tab_list a.on {
+  display: block;
   font-weight: bold;
   background-color: bisque;
 }

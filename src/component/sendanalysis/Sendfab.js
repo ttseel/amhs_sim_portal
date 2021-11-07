@@ -4,6 +4,7 @@ import TabList from '../common/TabList';
 import '../common/TabList.css';
 import '../common/Title.css';
 import './Sendfab.css';
+import SendfabTable from './SendfabTable';
 
 const getDisplayLines = defaultLine => {
   const curLines = {
@@ -76,7 +77,7 @@ const Sendfab = () => {
   };
 
   return (
-    <article>
+    <div>
       <h3 className="sub_title">
         <img src="/component/sendanalysis/network.png"></img>
         층/동간 반송량 Trend
@@ -98,7 +99,10 @@ const Sendfab = () => {
         </form>
         <TabList styleName={'tab_list month_list'} tabList={displayMonths} changeStateMethod={setCurMonth} />
       </div>
-    </article>
+      <div>
+        <SendfabTable />
+      </div>
+    </div>
   );
 };
 

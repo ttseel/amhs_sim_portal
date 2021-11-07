@@ -9,14 +9,15 @@ import Eqp from './masterdata/Eqp';
 import Step from './masterdata/Step';
 import WaferInputs from './masterdata/WaferInputs';
 import EmptyPage from './EmptyPage';
+import Home from './Home';
 import './common/Title.css';
 
 const Main = () => {
   return (
-    <div className="main">
+    <main className="main">
       <Switch>
         <Route exact path="/">
-          <h3 className="sub_title">Home</h3>
+          <Home />
         </Route>
         <Route path="/sendanalysis/sendNetwork">
           <Sendfab />
@@ -46,7 +47,7 @@ const Main = () => {
           <EmptyPage />
         </Route>
       </Switch>
-    </div>
+    </main>
   );
 };
 
