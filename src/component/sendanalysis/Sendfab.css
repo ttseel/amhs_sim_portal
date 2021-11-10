@@ -1,3 +1,7 @@
+.filter_wrapper {
+  margin-bottom: 50px;
+}
+
 .year_list_wrapper {
   display: inline-block;
   padding-left: 15px;
@@ -33,4 +37,16 @@
 
 .month_list a {
   padding: 0 18px;
+}
+
+.section_layout {
+}
+
+.section_layout img {
+  margin-left: 100px;
+  margin-top: 75px;
+}
+
+.section_layout h4 {
+  font-size: 18px;
 }

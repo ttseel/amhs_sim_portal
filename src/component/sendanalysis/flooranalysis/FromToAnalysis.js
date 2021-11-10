@@ -1,13 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import {useForm} from 'react-hook-form';
-import TabList from '../common/TabList';
-import '../common/TabList.css';
-import '../common/Title.css';
-import './Sendfab.css';
-import NetworkTable from './NetworkTable';
-import SendfabNetwork from './SendfabNetwork';
-import InterfaceChart from './InterfaceChart';
-import LocalData from '../../db/Sendfab.json';
+import TabList from '../../common/TabList';
+import '../../common/TabList.css';
+import '../../common/Title.css';
+import './FromToTable.css';
+import FromToTable from './FromToTable';
 
 const getDisplayLines = defaultLine => {
   const curLines = {
@@ -61,7 +58,7 @@ const getCurMonth = defaultMonth => {
   return defaultMonth === undefined ? thisMonth : defaultMonth;
 };
 
-const Sendfab = () => {
+const FromToAnalysis = () => {
   const [curLine, setCurLine] = useState(getCurLine('H1'));
   const [curYear, setCurYear] = useState(getCurYear());
   const [curMonth, setCurMonth] = useState(getCurMonth());
@@ -79,14 +76,11 @@ const Sendfab = () => {
     setCurYear(data.target.value);
   };
 
-  // console.log(LocalData['SendfabNetwork']);
-  const response = LocalData;
-
   return (
     <div>
       <h3 className="sub_title">
-        <img src="/component/sendanalysis/network.png"></img>
-        층/동간 반송량 Trend
+        <img src="/component/sendanalysis/from-to.png"></img>
+        층내 반송 From-To 분석
       </h3>
       <div className="filter_wrapper">
         <div>
@@ -109,17 +103,11 @@ const Sendfab = () => {
       </div>
       <div>
         <section className="section_layout">
-          <SendfabNetwork curLine={curLine} />
-          <NetworkTable data={response.NetworkTable} />
-        </section>
-      </div>
-      <div>
-        <section className="section_layout">
-          <InterfaceChart />
+          <FromToTable />
         </section>
       </div>
     </div>
   );
 };
 
-export default Sendfab;
+export default FromToAnalysis;

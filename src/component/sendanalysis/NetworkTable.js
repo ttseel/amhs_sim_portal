@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import {Table} from 'antd';
 import '../common/Table.css';
 import 'antd/dist/antd.css';
+import './NetworkTable.css';
+import LocalData from '../../db/Sendfab.json';
 
 const columns = [
   {
@@ -124,99 +126,6 @@ const columns = [
   },
 ];
 
-const data = [
-  {
-    id: 1,
-    interface: '12(7F) - 13(3F)',
-    fromLine: '12',
-    fromFloor: '7',
-    toLine: '13',
-    toFloor: '3',
-    orgLineId: 'KFBC',
-    count: 120,
-  },
-  {
-    id: 2,
-    interface: '12(7F) - 13(3F)',
-    fromLine: '12',
-    fromFloor: '7',
-    toLine: '13',
-    toFloor: '3',
-    orgLineId: 'KFBE',
-    count: 235,
-  },
-  {
-    id: 3,
-    interface: '12(7F) - 13(3F)',
-    fromLine: '13',
-    fromFloor: '3',
-    toLine: '12',
-    toFloor: '7',
-    orgLineId: 'KFBC',
-    count: 85,
-  },
-  {
-    id: 4,
-    interface: '12(7F) - 13(3F)',
-    fromLine: '13',
-    fromFloor: '3',
-    toLine: '12',
-    toFloor: '7',
-    orgLineId: 'KFBE',
-    count: 432,
-  },
-  {
-    id: 4,
-    interface: '12(7F) - 13(3F)',
-    fromLine: '13',
-    fromFloor: '3',
-    toLine: '12',
-    toFloor: '7',
-    orgLineId: 'KFBE',
-    count: 432,
-  },
-  {
-    id: 4,
-    interface: '12(7F) - 13(3F)',
-    fromLine: '13',
-    fromFloor: '3',
-    toLine: '12',
-    toFloor: '7',
-    orgLineId: 'KFBE',
-    count: 432,
-  },
-  {
-    id: 4,
-    interface: '12(7F) - 13(3F)',
-    fromLine: '13',
-    fromFloor: '3',
-    toLine: '12',
-    toFloor: '7',
-    orgLineId: 'KFBE',
-    count: 432,
-  },
-  {
-    id: 4,
-    interface: '12(7F) - 13(3F)',
-    fromLine: '13',
-    fromFloor: '3',
-    toLine: '12',
-    toFloor: '7',
-    orgLineId: 'KFBE',
-    count: 432,
-  },
-  {
-    id: 4,
-    interface: '12(7F) - 13(3F)',
-    fromLine: '13',
-    fromFloor: '3',
-    toLine: '12',
-    toFloor: '7',
-    orgLineId: 'KFBE',
-    count: 432,
-  },
-];
-
 const pagination = {
   defaultPageSize: 5,
 };
@@ -225,20 +134,21 @@ function onChange(pagination, filters, sorter, extra) {
   console.log('params', pagination, filters, sorter, extra);
 }
 
-const SendfabTable = () => {
-  const [pageSize, setPageSize] = useState(5);
+const NetworkTable = ({data}) => {
+  const [pageSize, setPageSize] = useState(10);
+
   return (
-    <div style={{height: 400, width: 840}}>
-      <h3>SendfabTable</h3>
+    <article className="sendfab_table_layout">
+      <h4>Sendfab Table</h4>
       <Table
         columns={columns}
         dataSource={data}
         pagination={{defaultPageSize: pageSize}}
         onChange={onChange}
-        size="middle"
+        size="small"
       />
-    </div>
+    </article>
   );
 };
 
-export default SendfabTable;
+export default NetworkTable;

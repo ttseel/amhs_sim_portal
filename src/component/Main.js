@@ -1,5 +1,6 @@
 import React from 'react';
 import {Route, Switch} from 'react-router-dom';
+import FromToAnalysis from './sendanalysis/flooranalysis/FromToAnalysis';
 import Sendfab from './sendanalysis/Sendfab';
 import ContStep from './sendanalysis/ContStep';
 import LotSize from './sendanalysis/LotSize';
@@ -18,6 +19,9 @@ const Main = () => {
       <Switch>
         <Route exact path="/">
           <Home />
+        </Route>
+        <Route path="/sendanalysis/flooranalysis/FromToAnalysis">
+          <FromToAnalysis />
         </Route>
         <Route path="/sendanalysis/sendNetwork">
           <Sendfab />

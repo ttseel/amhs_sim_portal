@@ -1,0 +1,42 @@
+{
+  "SendfabNetwork": {
+    "keys": 	["12L_7L","13L_3L","M1L_2L","M1L_4L","U1L_2L","U1L_4L","16L_4L","16L_8L", "Other Site"],
+    "line": 	["12","13","M1","M1","U1","U1","16","16","Other Site"],
+    "floor": 	["7","3","2","4","2","4","4","8",""],
+    "12L_7L":	["0","596","45","16","0","0","173","113","0"],
+    "13L_3L":	["160","0","94","94","780","84","72","159","0"],
+    "M1L_2L":	["81","46","0","0","0","0","0","0","0"],
+    "M1L_4L":	["22","27","0","0","0","0","0","0","0"],
+    "U1L_2L":	["45","321","0","0","0","0","158","13","0"],
+    "U1L_4L":	["85","74","0","0","0","0","0","0","0"],
+    "16L_4L":	["150","842","0","0","8","0","0","0","0"],
+    "16L_8L":	["194","97","0","0","156","0","0","0","0"],
+    "Other Site":	["0","0","0","0","735","135","0","0","0"]
+  },
+  "NetworkTable": [
+    {"key":1,"interface":"12(7F) - 13(3F)","fromLine":"12","fromFloor":"7","toLine":"13","toFloor":"3","orgLinekey":"KFBC","count":"220"},
+    {"key":2,"interface":"12(7F) - U1(2F)","fromLine":"12","fromFloor":"7","toLine":"U1","toFloor":"2","orgLinekey":"KFBC","count":"0"},
+    {"key":3,"interface":"12(7F) - U1(4F)","fromLine":"12","fromFloor":"7","toLine":"U1","toFloor":"4","orgLinekey":"KFBC","count":"0"},
+    {"key":4,"interface":"12(7F) - M(2F)","fromLine":"12","fromFloor":"7","toLine":"M","toFloor":"2","orgLinekey":"KFBC","count":"7"},
+    {"key":5,"interface":"12(7F) - M(4F)","fromLine":"12","fromFloor":"7","toLine":"M","toFloor":"4","orgLinekey":"KFBC","count":"25"},
+    {"key":6,"interface":"12(7F) - 13(3F)","fromLine":"13","fromFloor":"3","toLine":"12","toFloor":"7","orgLinekey":"KFBC","count":"398"},
+    {"key":7,"interface":"13(3F) - U1(2F)","fromLine":"13","fromFloor":"3","toLine":"U1","toFloor":"2","orgLinekey":"KFBC","count":"81"},
+    {"key":8,"interface":"13(3F) - U1(4F)","fromLine":"13","fromFloor":"3","toLine":"U1","toFloor":"4","orgLinekey":"KFBC","count":"55"},
+    {"key":9,"interface":"13(3F) - M(2F)","fromLine":"13","fromFloor":"3","toLine":"M","toFloor":"2","orgLinekey":"KFBC","count":"49"},
+    {"key":10,"interface":"13(3F) - M(4F)","fromLine":"13","fromFloor":"3","toLine":"M","toFloor":"4","orgLinekey":"KFBC","count":"32"},
+    {"key":11,"interface":"12(7F) - 13(3F)","fromLine":"12","fromFloor":"7","toLine":"13","toFloor":"3","orgLinekey":"KFBE","count":"119"},
+    {"key":12,"interface":"12(7F) - U1(2F)","fromLine":"12","fromFloor":"7","toLine":"U1","toFloor":"2","orgLinekey":"KFBE","count":"0"},
+    {"key":13,"interface":"12(7F) - U1(4F)","fromLine":"12","fromFloor":"7","toLine":"U1","toFloor":"4","orgLinekey":"KFBE","count":"0"},
+    {"key":14,"interface":"12(7F) - M(2F)","fromLine":"12","fromFloor":"7","toLine":"M","toFloor":"2","orgLinekey":"KFBE","count":"4"},
+    {"key":15,"interface":"12(7F) - M(4F)","fromLine":"12","fromFloor":"7","toLine":"M","toFloor":"4","orgLinekey":"KFBE","count":"14"},
+    {"key":16,"interface":"12(7F) - 13(3F)","fromLine":"13","fromFloor":"3","toLine":"12","toFloor":"7","orgLinekey":"KFBE","count":"215"},
+    {"key":17,"interface":"13(3F) - U1(2F)","fromLine":"13","fromFloor":"3","toLine":"U1","toFloor":"2","orgLinekey":"KFBE","count":"44"},
+    {"key":18,"interface":"13(3F) - U1(4F)","fromLine":"13","fromFloor":"3","toLine":"U1","toFloor":"4","orgLinekey":"KFBE","count":"30"},
+    {"key":19,"interface":"13(3F) - M(2F)","fromLine":"13","fromFloor":"3","toLine":"M","toFloor":"2","orgLinekey":"KFBE","count":"27"},
+    {"key":20,"interface":"13(3F) - M(4F)","fromLine":"13","fromFloor":"3","toLine":"M","toFloor":"4","orgLinekey":"KFBE","count":"17"}
+  ],
+  "InterfaceChart": {
+    "12(7F) - 13(3F)":{},
+    "13(3F) - U1(2F)":{}
+  }  
+}
