@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import 'antd/dist/antd.css';
 import {Table} from 'antd';
+import './FromToTable.css';
 
 const columns = [
   {
@@ -21,20 +22,20 @@ const columns = [
     onFilter: (value, record) => record.name.indexOf(value) === 0,
     sorter: (a, b) => a.name.length - b.name.length,
     sortDirections: ['descend'],
+    render(text, record) {
+      return {
+        props: {
+          style: {background: '#EBEBEB'},
+        },
+        children: <div>{text}</div>,
+      };
+    },
   },
   {
     title: 'Age',
     dataIndex: 'age',
     defaultSortOrder: 'descend',
     sorter: (a, b) => a.age - b.age,
-    render(text, record) {
-      return {
-        props: {
-          style: {background: parseInt(text) > 40 ? 'red' : 'green'},
-        },
-        children: <div>{text}</div>,
-      };
-    },
   },
   {
     title: 'Address',
@@ -84,12 +85,14 @@ function onChange(pagination, filters, sorter, extra) {
   console.log('params', pagination, filters, sorter, extra);
 }
 
-export default function DataTable() {
+const FromToTable = () => {
   const [pageSize, setPageSize] = useState(3);
 
   return (
-    <div style={{width: 400}}>
+    <div style={{width: 400}} className="testcss">
       <Table columns={columns} dataSource={data} onChange={onChange} size="middle" />
     </div>
   );
-}
+};
+
+export default FromToTable;

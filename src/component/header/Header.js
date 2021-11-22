@@ -16,7 +16,7 @@ const Header = () => {
               <a className="main_menu_a">층/동간 KPI 분석</a>
               <ul className="sub_menu">
                 <li>
-                  <Link to="/sendanalysis/flooranalysis/FromToAnalysis">층내 반송 From-To 분석</Link>
+                  <Link to="/flooranalysis/FromToAnalysis">층내 반송 From-To 분석</Link>
                 </li>
                 <li>
                   <Link to="/sendanalysis/sendNetwork">층/동간 반송량 Trend</Link>

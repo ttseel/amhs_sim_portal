@@ -15,7 +15,7 @@ const EachTab = ({tabName, link, selectTab, changeTabMethod}) => {
   );
 };
 
-const TabList = ({styleName, tabList, changeStateMethod}) => {
+const TabList = ({styleName, tabList, links, changeStateMethod}) => {
   const [tabNames, seTabNames] = useState(Object.keys(tabList));
   const [style, setStyleName] = useState(styleName);
 
@@ -36,7 +36,6 @@ const TabList = ({styleName, tabList, changeStateMethod}) => {
     setTabState(newTabState);
     changeStateMethod(tabName);
   };
-
   return (
     <ul className={style}>
       {tabNames.map((eachTab, index) => {
@@ -44,7 +43,7 @@ const TabList = ({styleName, tabList, changeStateMethod}) => {
           <EachTab
             key={index}
             tabName={eachTab}
-            link="/sendanalysis/sendNetwork"
+            link={links[eachTab]}
             selectTab={tabState[eachTab]}
             changeTabMethod={changeTabState}
           ></EachTab>

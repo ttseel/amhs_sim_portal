@@ -67,8 +67,22 @@ const Sendfab = () => {
   const [curMonth, setCurMonth] = useState(getCurMonth());
 
   const displayLines = getDisplayLines(curLine);
+  const linkOfLines = {...displayLines};
+  for (let key in linkOfLines) {
+    linkOfLines[key] = '/sendanalysis/sendNetwork';
+  }
+
   const displayYears = getDisplayYears();
+  const linkOfYears = {...displayYears};
+  for (let key in linkOfYears) {
+    linkOfYears[key] = '/sendanalysis/sendNetwork';
+  }
+
   const displayMonths = getDisplayMonths(curMonth);
+  const linkOfMonths = {...displayMonths};
+  for (let key in linkOfMonths) {
+    linkOfMonths[key] = '/sendanalysis/sendNetwork';
+  }
 
   useEffect(() => {
     console.log(curLine);
@@ -79,7 +93,6 @@ const Sendfab = () => {
     setCurYear(data.target.value);
   };
 
-  // console.log(LocalData['SendfabNetwork']);
   const response = LocalData;
 
   return (
@@ -90,7 +103,7 @@ const Sendfab = () => {
       </h3>
       <div className="filter_wrapper">
         <div>
-          <TabList styleName={'tab_list'} tabList={displayLines} changeStateMethod={setCurLine} />
+          <TabList styleName={'tab_list'} tabList={displayLines} links={linkOfLines} changeStateMethod={setCurLine} />
         </div>
         <div>
           <form className="year_list_wrapper">
@@ -104,7 +117,12 @@ const Sendfab = () => {
               })}
             </select>
           </form>
-          <TabList styleName={'tab_list month_list'} tabList={displayMonths} changeStateMethod={setCurMonth} />
+          <TabList
+            styleName={'tab_list month_list'}
+            tabList={displayMonths}
+            links={linkOfMonths}
+            changeStateMethod={setCurMonth}
+          />
         </div>
       </div>
       <div>

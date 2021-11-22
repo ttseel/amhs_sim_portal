@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {useForm} from 'react-hook-form';
-import TabList from '../../common/TabList';
-import '../../common/TabList.css';
-import '../../common/Title.css';
+import TabList from '../common/TabList';
+import '../common/TabList.css';
+import '../common/Title.css';
 import './FromToTable.css';
 import FromToTable from './FromToTable';
 
@@ -64,8 +64,22 @@ const FromToAnalysis = () => {
   const [curMonth, setCurMonth] = useState(getCurMonth());
 
   const displayLines = getDisplayLines(curLine);
+  const linkOfLines = {...displayLines};
+  for (let key in linkOfLines) {
+    linkOfLines[key] = '/flooranalysis/FromToAnalysis';
+  }
+
   const displayYears = getDisplayYears();
+  const linkOfYears = {...displayYears};
+  for (let key in linkOfYears) {
+    linkOfYears[key] = '/flooranalysis/FromToAnalysis';
+  }
+
   const displayMonths = getDisplayMonths(curMonth);
+  const linkOfMonths = {...displayMonths};
+  for (let key in linkOfMonths) {
+    linkOfMonths[key] = '/flooranalysis/FromToAnalysis';
+  }
 
   useEffect(() => {
     console.log(curLine);
@@ -79,12 +93,12 @@ const FromToAnalysis = () => {
   return (
     <div>
       <h3 className="sub_title">
-        <img src="/component/sendanalysis/from-to.png"></img>
+        <img src="/component/sendanalysis/from-to.png" alt="from-to.png 오류"></img>
         층내 반송 From-To 분석
       </h3>
       <div className="filter_wrapper">
         <div>
-          <TabList styleName={'tab_list'} tabList={displayLines} changeStateMethod={setCurLine} />
+          <TabList styleName={'tab_list'} tabList={displayLines} links={linkOfLines} changeStateMethod={setCurLine} />
         </div>
         <div>
           <form className="year_list_wrapper">
@@ -98,7 +112,12 @@ const FromToAnalysis = () => {
               })}
             </select>
           </form>
-          <TabList styleName={'tab_list month_list'} tabList={displayMonths} changeStateMethod={setCurMonth} />
+          <TabList
+            styleName={'tab_list month_list'}
+            tabList={displayMonths}
+            links={linkOfMonths}
+            changeStateMethod={setCurMonth}
+          />
         </div>
       </div>
       <div>
