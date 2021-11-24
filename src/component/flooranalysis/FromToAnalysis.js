@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useForm} from 'react-hook-form';
+import axios from 'axios';
 import TabList from '../common/TabList';
 import '../common/TabList.css';
 import '../common/Title.css';
@@ -9,7 +10,7 @@ import FromToTable from './FromToTable';
 const getDisplayLines = defaultLine => {
   const curLines = {
     H1: false,
-    'H2/3': false,
+    'H2,3': false,
     P: false,
   };
   defaultLine = defaultLine === undefined ? 'H1' : defaultLine;
@@ -81,10 +82,24 @@ const FromToAnalysis = () => {
     linkOfMonths[key] = '/flooranalysis/FromToAnalysis';
   }
 
+  const [tableHeader, setTableHeader] = useState([]);
+  const [tableData, setTableRows] = useState([]);
+
   useEffect(() => {
     console.log(curLine);
     console.log(curYear);
     console.log(curMonth);
+
+    axios.get('http://localhost:3001/fromto?year=2021&month=10&site=H1').then(res => {
+      setTableHeader(res.data[0].data.header);
+      setTableRows(res.data[0].data.rows);
+      console.log(res.data[0].data.rows);
+    });
+
+    // axios.get('http://localhost:3001/team').then(res => {
+    //   setTableHeader(res.data.header);
+    //   setTableRows(res.data.data);
+    // });
   }, [curLine, curYear, curMonth]);
   const onSubmit = data => {
     setCurYear(data.target.value);
@@ -93,8 +108,7 @@ const FromToAnalysis = () => {
   return (
     <div>
       <h3 className="sub_title">
-        <img src="/component/sendanalysis/from-to.png" alt="from-to.png 오류"></img>
-        층내 반송 From-To 분석
+        <img src="/component/sendanalysis/from-to.png" alt="from-to.png 오류"></img>층 내 반송 From-To 분석
       </h3>
       <div className="filter_wrapper">
         <div>
@@ -122,7 +136,7 @@ const FromToAnalysis = () => {
       </div>
       <div>
         <section className="section_layout">
-          <FromToTable />
+          <FromToTable header={tableHeader} rows={tableData} />
         </section>
       </div>
     </div>
