@@ -4,18 +4,22 @@ import axios from 'axios';
 import TabList from '../common/TabList';
 import '../common/TabList.css';
 import '../common/Title.css';
-import './FromToTable.css';
+import moduleCss from './FromToTable.module.css';
 import FromToTable from './FromToTable';
+import FromToAnalysisApi from '../../api/flooranalysis/FromToAnalysisApi';
+import {PropTypes} from 'prop-types';
 
-const getDisplayLines = defaultLine => {
-  const curLines = {
+const fromToAnalysisApi = new FromToAnalysisApi();
+
+const getDisplaySites = defaultSite => {
+  const curSites = {
     H1: false,
     'H2,3': false,
     P: false,
   };
-  defaultLine = defaultLine === undefined ? 'H1' : defaultLine;
-  curLines[defaultLine] = true;
-  return curLines;
+  defaultSite = defaultSite === undefined ? 'H1' : defaultSite;
+  curSites[defaultSite] = true;
+  return curSites;
 };
 
 const getDisplayYears = oldestYear => {
@@ -43,8 +47,8 @@ const getDisplayMonths = (defaultMonth, oldestMonth) => {
   return curMonths;
 };
 
-const getCurLine = defaultLine => {
-  return defaultLine === undefined ? 'H1' : defaultLine;
+const getCurSite = defaultSite => {
+  return defaultSite === undefined ? 'H1' : defaultSite;
 };
 
 const getCurYear = defaultYear => {
@@ -59,15 +63,23 @@ const getCurMonth = defaultMonth => {
   return defaultMonth === undefined ? thisMonth : defaultMonth;
 };
 
+const makeSearchKey = (site, year, month) => {
+  return site + '_' + year + '_' + month;
+};
+
+const isExistInObject = (obj, key) => {
+  return Object.prototype.hasOwnProperty.call(obj, key);
+};
+
 const FromToAnalysis = () => {
-  const [curLine, setCurLine] = useState(getCurLine('H1'));
+  const [curSite, setCurSite] = useState(getCurSite('H1'));
   const [curYear, setCurYear] = useState(getCurYear());
   const [curMonth, setCurMonth] = useState(getCurMonth());
 
-  const displayLines = getDisplayLines(curLine);
-  const linkOfLines = {...displayLines};
-  for (let key in linkOfLines) {
-    linkOfLines[key] = '/flooranalysis/FromToAnalysis';
+  const displaySites = getDisplaySites(curSite);
+  const linkOfSites = {...displaySites};
+  for (let key in linkOfSites) {
+    linkOfSites[key] = '/flooranalysis/FromToAnalysis';
   }
 
   const displayYears = getDisplayYears();
@@ -82,25 +94,60 @@ const FromToAnalysis = () => {
     linkOfMonths[key] = '/flooranalysis/FromToAnalysis';
   }
 
-  const [tableHeader, setTableHeader] = useState([]);
-  const [tableData, setTableRows] = useState([]);
+  const [displayLineCache, setDisplayLineCache] = useState({});
+
+  const requestFromToData = async () => {
+    if (
+      displayLineCache === undefined ||
+      isExistInObject(displayLineCache, makeSearchKey(curSite, curYear, curMonth))
+    ) {
+      console.log('aleady requested');
+      return;
+    }
+
+    const res = await fromToAnalysisApi.readFromToTable(curSite, curYear, curMonth);
+    return res;
+  };
+
+  const updateDisplayLines = response => {
+    if (isExistInObject(displayLineCache, makeSearchKey(curSite, curYear, curMonth))) {
+      console.log('find in cache');
+    } else {
+      response.then(result => {
+        const newLines = {...displayLineCache};
+        newLines[makeSearchKey(curSite, curYear, curMonth)] = result;
+        setDisplayLineCache(newLines);
+      });
+    }
+  };
+
+  const displayFromToTableComponent = () => {
+    if (displayLineCache[makeSearchKey(curSite, curYear, curMonth)] === undefined) {
+      return <div style={{fontSize: 20}}>No data to display</div>;
+    }
+
+    const displayTarget = displayLineCache[makeSearchKey(curSite, curYear, curMonth)].data.line;
+    console.log(displayTarget);
+    return Object.keys(displayTarget).map((line, index) => {
+      return (
+        <section key={index} className={moduleCss.section_container}>
+          <FromToTable
+            title={line}
+            header={displayTarget[line].header}
+            rows={displayTarget[line].rows}
+            downloadUrl={`${curSite}_${line}_${curYear}_${curMonth}`}
+          />
+        </section>
+      );
+    });
+  };
 
   useEffect(() => {
-    console.log(curLine);
-    console.log(curYear);
-    console.log(curMonth);
+    console.log('selected -> ' + `site: ${curSite}, year: ${curYear}, month: ${curMonth}`);
 
-    axios.get('http://localhost:3001/fromto?year=2021&month=10&site=H1').then(res => {
-      setTableHeader(res.data[0].data.header);
-      setTableRows(res.data[0].data.rows);
-      console.log(res.data[0].data.rows);
-    });
-
-    // axios.get('http://localhost:3001/team').then(res => {
-    //   setTableHeader(res.data.header);
-    //   setTableRows(res.data.data);
-    // });
-  }, [curLine, curYear, curMonth]);
+    const response = requestFromToData();
+    updateDisplayLines(response);
+  }, [curSite, curYear, curMonth]);
   const onSubmit = data => {
     setCurYear(data.target.value);
   };
@@ -108,11 +155,12 @@ const FromToAnalysis = () => {
   return (
     <div>
       <h3 className="sub_title">
-        <img src="/component/sendanalysis/from-to.png" alt="from-to.png 오류"></img>층 내 반송 From-To 분석
+        <img src="/component/sendanalysis/from-to.png" alt="from-to.png" />
+        From-To Analysis
       </h3>
-      <div className="filter_wrapper">
+      <div className={moduleCss.filter_wrapper}>
         <div>
-          <TabList styleName={'tab_list'} tabList={displayLines} links={linkOfLines} changeStateMethod={setCurLine} />
+          <TabList styleName={'tab_list'} tabList={displaySites} links={linkOfSites} changeStateMethod={setCurSite} />
         </div>
         <div>
           <form className="year_list_wrapper">
@@ -134,11 +182,7 @@ const FromToAnalysis = () => {
           />
         </div>
       </div>
-      <div>
-        <section className="section_layout">
-          <FromToTable header={tableHeader} rows={tableData} />
-        </section>
-      </div>
+      <div>{displayFromToTableComponent()}</div>
     </div>
   );
 };

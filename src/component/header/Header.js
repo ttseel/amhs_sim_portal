@@ -13,11 +13,19 @@ const Header = () => {
         <nav className="header-nav">
           <ul className="main_menu">
             <li className="main_menu_li">
-              <a className="main_menu_a">층/동간 KPI 분석</a>
+              <a className="main_menu_a">Transfer Analysis</a>
               <ul className="sub_menu">
                 <li>
-                  <Link to="/flooranalysis/FromToAnalysis">층 내 반송 From-To 분석</Link>
+                  <Link to="/flooranalysis/FromToAnalysis">From-To Analysis</Link>
                 </li>
+                <li>
+                  <Link to="/sendanalysis/contStep">비정형 Send</Link>
+                </li>
+              </ul>
+            </li>
+            <li className="main_menu_li">
+              <a className="main_menu_a">SendFAB Analysis</a>
+              <ul className="sub_menu">
                 <li>
                   <Link to="/sendanalysis/sendNetwork">층/동간 반송량 Trend</Link>
                 </li>
@@ -33,7 +41,7 @@ const Header = () => {
               </ul>
             </li>
             <li className="main_menu_li">
-              <a className="main_menu_a">기준정보 분석</a>
+              <a className="main_menu_a">Master data Analysis</a>
               <ul className="sub_menu">
                 <li>
                   <Link to="/masterdata/WaferInputs">투입량</Link>

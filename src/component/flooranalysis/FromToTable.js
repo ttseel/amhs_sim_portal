@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import 'antd/dist/antd.css';
 import {Table} from 'antd';
-import './FromToTable.css';
+import moduleCss from './FromToTable.module.css';
 
 const makeColumns = colNames => {
   const columns = [];
@@ -37,7 +37,7 @@ function onChange(pagination, filters, sorter, extra) {
   console.log('params', pagination, filters, sorter, extra);
 }
 
-const FromToTable = ({header, rows}) => {
+const FromToTable = ({title, header, rows, downloadUrl}) => {
   const [pageSize, setPageSize] = useState(3);
   const [columns, setColumns] = useState([]);
 
@@ -47,9 +47,17 @@ const FromToTable = ({header, rows}) => {
   }, [header]);
 
   return (
-    <div style={{width: 800}}>
+    <article style={{width: 800}}>
+      <div className={moduleCss.title_container}>
+        <h4 className={moduleCss.table_title}>{title}</h4>
+        <div className={moduleCss.download_container}>
+          <a href={downloadUrl} download>
+            <img src="/component/common/excel_icon.jpeg" alt="excel_icon.jpeg" />
+          </a>
+        </div>
+      </div>
       <Table columns={columns} dataSource={rows} onChange={onChange} size="middle" />
-    </div>
+    </article>
   );
 };
 

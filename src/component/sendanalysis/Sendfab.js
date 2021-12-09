@@ -3,7 +3,7 @@ import {useForm} from 'react-hook-form';
 import TabList from '../common/TabList';
 import '../common/TabList.css';
 import '../common/Title.css';
-import './Sendfab.css';
+import moduleCss from './Sendfab.module.css';
 import NetworkTable from './NetworkTable';
 import SendfabNetwork from './SendfabNetwork';
 import InterfaceChart from './InterfaceChart';
@@ -101,7 +101,7 @@ const Sendfab = () => {
         <img src="/component/sendanalysis/network.png"></img>
         층/동간 반송량 Trend
       </h3>
-      <div className="filter_wrapper">
+      <div className={moduleCss.filter_wrapper}>
         <div>
           <TabList styleName={'tab_list'} tabList={displayLines} links={linkOfLines} changeStateMethod={setCurLine} />
         </div>
@@ -118,7 +118,7 @@ const Sendfab = () => {
             </select>
           </form>
           <TabList
-            styleName={'tab_list month_list'}
+            styleName={'tab_list {moduleCss.month_list}'}
             tabList={displayMonths}
             links={linkOfMonths}
             changeStateMethod={setCurMonth}
@@ -126,13 +126,13 @@ const Sendfab = () => {
         </div>
       </div>
       <div>
-        <section className="section_layout">
+        <section className={moduleCss.section_layout}>
           <SendfabNetwork curLine={curLine} />
           <NetworkTable data={response.NetworkTable} />
         </section>
       </div>
       <div>
-        <section className="section_layout">
+        <section className={moduleCss.section_layout}>
           <InterfaceChart />
         </section>
       </div>

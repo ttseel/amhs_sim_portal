@@ -1,0 +1,29 @@
+.ant-table-thead > tr > th {
+  background: #dcdcdc !important;
+}
+
+.filter_wrapper {
+  margin-bottom: 50px;
+}
+
+.title_container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.table_title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.download_container {
+  display: flex;
+}
+
+.download_container img {
+  height: 30px;
+}
+
+.section_container {
+  margin: 0 0 40px 0;
+}

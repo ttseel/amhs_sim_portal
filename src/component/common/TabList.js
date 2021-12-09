@@ -17,7 +17,6 @@ const EachTab = ({tabName, link, selectTab, changeTabMethod}) => {
 
 const TabList = ({styleName, tabList, links, changeStateMethod}) => {
   const [tabNames, seTabNames] = useState(Object.keys(tabList));
-  const [style, setStyleName] = useState(styleName);
 
   const initSelectTabs = () => {
     const selectTab = {};
@@ -37,7 +36,7 @@ const TabList = ({styleName, tabList, links, changeStateMethod}) => {
     changeStateMethod(tabName);
   };
   return (
-    <ul className={style}>
+    <ul className={styleName}>
       {tabNames.map((eachTab, index) => {
         return (
           <EachTab
