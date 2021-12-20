@@ -12,6 +12,9 @@ import WaferInputs from './masterdata/WaferInputs';
 import EmptyPage from './EmptyPage';
 import Home from './Home';
 import './common/Title.css';
+import SimBoard from './simulation/SimBoard';
+import MySimulation from './simulation/MySimulation';
+import Reservation from './simulation/Reservation';
 
 const Main = () => {
   return (
@@ -46,6 +49,15 @@ const Main = () => {
         </Route>
         <Route path="/masterdata/Arrange">
           <Arrange />
+        </Route>
+        <Route path="/simulation/SimBoard">
+          <SimBoard />
+        </Route>
+        <Route path="/simulation/MySimulation">
+          <MySimulation />
+        </Route>
+        <Route path="/simulation/Reservation">
+          <Reservation />
         </Route>
         <Route>
           <EmptyPage />

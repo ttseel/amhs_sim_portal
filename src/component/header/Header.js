@@ -23,7 +23,7 @@ const Header = () => {
                 </li>
               </ul>
             </li>
-            <li className="main_menu_li">
+            {/* <li className="main_menu_li">
               <a className="main_menu_a">SendFAB Analysis</a>
               <ul className="sub_menu">
                 <li>
@@ -56,9 +56,20 @@ const Header = () => {
                   <Link to="/masterdata/Arrange">Arrange</Link>
                 </li>
               </ul>
-            </li>
+            </li> */}
             <li className="main_menu_li">
               <a className="main_menu_a">Simulation</a>
+              <ul className="sub_menu">
+                <li>
+                  <Link to="/simulation/SimBoard">Sim Board</Link>
+                </li>
+                <li>
+                  <Link to="/simulation/MySimulation">My Simulation</Link>
+                </li>
+                <li>
+                  <Link to="/simulation/Reservation">Reservation</Link>
+                </li>
+              </ul>
             </li>
           </ul>
         </nav>
