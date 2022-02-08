@@ -1,12 +1,13 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import {Table, Tag, Space} from 'antd';
 import Reservation from './Reservation';
 import CurrentRunningTable from './CurrentRunningTable';
 import ReservedTable from './ReservedTable';
+import {readCurrentRunningApi, readReservedScenarioApi} from '../../api/simulation/SimulationApis';
 
-const data_cur_running = [
+const mockDataCurrentRunning = [
   {
     key: '1',
     no: 1,
@@ -17,7 +18,7 @@ const data_cur_running = [
     runningTime: 42,
     currentRep: 3,
     requestRep: 4,
-    server: '#1',
+    serverNo: '#1',
   },
   {
     key: '2',
@@ -29,7 +30,7 @@ const data_cur_running = [
     runningTime: 57,
     currentRep: 1,
     requestRep: 2,
-    server: '#2',
+    serverNo: '#2',
   },
   {
     key: '3',
@@ -41,11 +42,11 @@ const data_cur_running = [
     runningTime: 75,
     currentRep: 3,
     requestRep: 5,
-    server: '#1',
+    serverNo: '#1',
   },
 ];
 
-const data_cur_reserved = [
+const mockDataReserved = [
   {
     key: '1',
     no: 1,
@@ -73,16 +74,31 @@ const data_cur_reserved = [
 ];
 
 const SimBoard = () => {
+  const [currentUser, setCurrentUser] = useState('USER2');
+  const [currentRunning, setCurrentRunning] = useState();
+  const [reserved, setReserved] = useState();
+  useEffect(() => {
+    readCurrentRunningApi('all').then(response => {
+      console.log('readCurrentRunningApi(all): ', response.data);
+      setCurrentRunning(response.data);
+    });
+
+    readReservedScenarioApi('all').then(response => {
+      console.log('readReservedScenarioApi(all): ', response.data);
+      setReserved(response.data);
+    });
+  }, []);
+
   return (
     <div>
       <h3 className="sub_title">
         <img src="/component/simulation/simboard.png"></img>
         <em>Sim Board</em>
         <section>
-          <CurrentRunningTable data={data_cur_running} />
+          <CurrentRunningTable currentUser={currentUser} data={currentRunning} setData={setCurrentRunning} />
         </section>
         <section>
-          <ReservedTable data={data_cur_reserved} />
+          <ReservedTable currentUser={currentUser} data={reserved} setData={setReserved} />
         </section>
       </h3>
     </div>

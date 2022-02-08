@@ -4,11 +4,11 @@ import 'antd/dist/antd.css';
 import {Descriptions, Badge, Empty} from 'antd';
 import {UploadOutlined} from '@ant-design/icons';
 
-const ScenarioDescription = ({scenarioFile}) => {
-  if (scenarioFile !== undefined) {
+const ScenarioDescription = ({scenarioInfo}) => {
+  if (scenarioInfo !== undefined) {
     return (
       <Descriptions title="" bordered>
-        <Descriptions.Item label="Product">Cloud Database</Descriptions.Item>
+        <Descriptions.Item label="Scenario">Cloud Database</Descriptions.Item>
         <Descriptions.Item label="Billing Mode">Prepaid</Descriptions.Item>
         <Descriptions.Item label="Automatic Renewal">YES</Descriptions.Item>
         <Descriptions.Item label="Order time">2018-04-24 18:00:00</Descriptions.Item>
@@ -37,7 +37,7 @@ const ScenarioDescription = ({scenarioFile}) => {
       </Descriptions>
     );
   } else {
-    console.log(scenarioFile);
+    // console.log(scenarioInfo);
     return <Empty />;
   }
 };
