@@ -1,0 +1,16 @@
+.sendfab_table_layout {
+  display: inline-block;
+  height: 400px;
+  width: 800px;
+  margin: 20px;
+  margin-bottom: 60px;
+  vertical-align: top;
+}
+
+.sendfab_table_layout h3 {
+  padding-left: 5px;
+}
+
+.sendfab_table_layout Table {
+  font-size: 13px;
+}

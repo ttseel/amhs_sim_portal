@@ -1,0 +1,12 @@
+.network_article_layout {
+  display: inline-block;
+  height: 400px;
+  width: 500px;
+  margin: 20px;
+  margin-bottom: 60px;
+  vertical-align: top;
+}
+
+.network_article_layout MyResponsiveChord {
+  font-size: 40px;
+}
