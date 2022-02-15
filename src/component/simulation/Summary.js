@@ -73,7 +73,7 @@ const mockDataReserved = [
   },
 ];
 
-const SimBoard = () => {
+const Summary = () => {
   const [currentUser, setCurrentUser] = useState('USER2');
   const [currentRunning, setCurrentRunning] = useState();
   const [reserved, setReserved] = useState();
@@ -93,7 +93,7 @@ const SimBoard = () => {
     <div>
       <h3 className="sub_title">
         <img src="/component/simulation/simboard.png"></img>
-        <em>Sim Board</em>
+        <em>Summary</em>
         <section>
           <CurrentRunningTable currentUser={currentUser} data={currentRunning} setData={setCurrentRunning} />
         </section>
@@ -105,4 +105,4 @@ const SimBoard = () => {
   );
 };
 
-export default SimBoard;
+export default Summary;

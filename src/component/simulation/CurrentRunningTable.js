@@ -23,6 +23,11 @@ const CurrentRunningTable = ({currentUser, data, setData}) => {
       key: 'simulator',
     },
     {
+      title: 'Version',
+      dataIndex: 'version',
+      key: 'version',
+    },
+    {
       title: 'User',
       key: 'user',
       dataIndex: 'user',
@@ -63,9 +68,9 @@ const CurrentRunningTable = ({currentUser, data, setData}) => {
       key: 'requestRep',
     },
     {
-      title: 'Server No',
-      dataIndex: 'serverNo',
-      key: 'serverNo',
+      title: 'Execution Server',
+      dataIndex: 'executionServer',
+      key: 'executionServer',
     },
     {
       title: 'Request Stop',

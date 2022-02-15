@@ -23,6 +23,11 @@ const ReservedTable = ({currentUser, data, setData}) => {
       key: 'simulator',
     },
     {
+      title: 'Version',
+      dataIndex: 'version',
+      key: 'version',
+    },
+    {
       title: 'User',
       dataIndex: 'user',
       key: 'user',
@@ -46,6 +51,11 @@ const ReservedTable = ({currentUser, data, setData}) => {
       title: 'Reservation Date',
       dataIndex: 'reservationDate',
       key: 'reservationDate',
+    },
+    {
+      title: 'Reservation Server',
+      dataIndex: 'reservationServer',
+      key: 'reservationServer',
     },
     {
       title: 'Request Cancel',

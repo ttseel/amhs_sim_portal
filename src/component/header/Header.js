@@ -61,7 +61,7 @@ const Header = () => {
               <a className="main_menu_a">Simulation</a>
               <ul className="sub_menu">
                 <li>
-                  <Link to="/simulation/SimBoard">Sim Board</Link>
+                  <Link to="/simulation/Summary">Summary</Link>
                 </li>
                 <li>
                   <Link to="/simulation/MySimulation">My Simulation</Link>

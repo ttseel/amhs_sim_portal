@@ -13,21 +13,6 @@ import {
   reserveNewScenarioApi,
 } from '../../api/simulation/SimulationApis';
 
-const MyModal = ({props}) => {
-  return (
-    <Modal
-      title={props.title}
-      visible={props.visible}
-      // onOk={props.handleSubmitOk}
-      // confirmLoading={props.confirmLoading}
-      // onCancel={props.handleSubmitCancel}
-      // footer={props.footer}
-    >
-      <p>{'props.contents'}</p>
-    </Modal>
-  );
-};
-
 const Reservation = () => {
   /*
     Simulator select
@@ -53,14 +38,16 @@ const Reservation = () => {
   */
 
   // 주의: version은 value라는 속성을 가진 object 타입이어야 한다. <Select> 컴포넌트의 value 속성은 value를 가진 object 타입을 받기 때문
-  const [version, setVersion] = useState({value: 'Please select a version'});
-
+  const initialVersionPhrase = 'Please select a version';
+  const [version, setVersion] = useState({value: initialVersionPhrase});
   const [versionList, setVersionList] = useState({
-    AMHS_SIM: ['Nothing to select'],
-    SEEFLOW: ['Nothing to select'],
-    REMOTE_SIM: ['Nothing to select'],
+    AMHS_SIM: [initialVersionPhrase],
+    SEEFLOW: [initialVersionPhrase],
+    REMOTE_SIM: [initialVersionPhrase],
   });
-
+  const isVersionSelected = () => {
+    return version['value'] !== initialVersionPhrase;
+  };
   const VersionSelectComponent = props => {
     const {Option} = Select;
 
@@ -90,38 +77,173 @@ const Reservation = () => {
   };
 
   /*
-    Scenario import
+    .fsl file import
   */
-  const [importFile, setImportFile] = useState();
-  const isFileUploaded = () => {
-    return importFile !== undefined;
+  const [fslFile, setFslFile] = useState({});
+  const isFslUploaded = () => {
+    return Object.keys(fslFile).length !== 0;
   };
-  const scenarioImportButtonProps = {
-    name: 'file',
+  const fslImportButtonProps = {
+    name: 'fslFile',
     action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
     headers: {
       authorization: 'authorization-text',
     },
     onChange(event) {
       if (event.file.status !== 'uploading') {
-        setImportFile(prev => undefined);
-        // console.log(event.file, event.fileList);
+        const newFile = {};
+        setFslFile(prev => newFile);
       }
-      if (event.file.status === 'done') {
+      if (checkAllFilesUploaded(event.fileList)) {
+        initAllFilesStatusToDone(event.fileList);
+
+        if (!checkOnlyOneFileUploaded(event.fileList)) {
+          for (let element of event.fileList) {
+            element.status = 'error';
+          }
+          const newFile = {};
+          setFslFile(prev => newFile);
+          return;
+        }
+        for (let element of event.fileList) {
+          const extension = element.name.slice(-3, element.name.length);
+          if (!validExtension('fsl', extension)) {
+            element.status = 'error';
+
+            const newFile = {};
+            setFslFile(prev => newFile);
+            return;
+          }
+        }
         message.success(`${event.file.name} file uploaded successfully`);
 
         const file = event.file.originFileObj;
         console.log('Imported file type: ' + typeof file);
-        setImportFile(file);
+        setFslFile(file);
+
         const reader = new FileReader();
         reader.onload = function () {
           console.log(reader.result);
         };
         reader.readAsText(file);
+      }
+    },
+  };
+
+  const initAllFilesStatusToDone = fileList => {
+    for (let element of fileList) {
+      element.status = 'done';
+    }
+  };
+
+  const checkOnlyOneFileUploaded = fileList => {
+    if (fileList.length > 1) {
+      Modal.error({
+        title: 'File upload failed',
+        content: `The allowed number of '.fsl' files is one.`,
+      });
+      return false;
+    }
+    return true;
+  };
+
+  /*
+    .fss files import
+  */
+  const [fssFiles, setFssFiles] = useState({});
+  const isFssUploaded = () => {
+    return Object.keys(fssFiles).length !== 0;
+  };
+  const fssImportButtonProps = {
+    name: 'fssFile',
+    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+    headers: {
+      authorization: 'authorization-text',
+    },
+    uploadFile: [{name: 'test', percent: 1, status: 'done'}],
+    multiple: true,
+    // maxCount: 10,
+    onChange(event) {
+      if (event.file.status !== 'uploading') {
+        const newFssFiles = {};
+        setFssFiles(prev => newFssFiles);
+        // console.log(event.file, event.fileList);
+      }
+
+      if (checkAllFilesUploaded(event.fileList)) {
+        setAllFssFilesIntoState(event.fileList)
+          .then(result => {
+            message.success(`all .fss files are uploaded successfully`);
+            console.log('imported fss files: ', result);
+
+            const newFssFiles = {...result};
+            return newFssFiles;
+          })
+          .then(result => {
+            setFssFiles(prev => result);
+            // setFssFiles(prev => [result['scenario1.fss'], result['scenario2.fss']]);
+          })
+          .catch(result => {
+            const newFssFiles = {};
+            setFssFiles(prev => newFssFiles);
+          });
       } else if (event.file.status === 'error') {
         message.error(`${event.file.name} file upload failed.`);
       }
     },
+  };
+
+  const checkAllFilesUploaded = fileList => {
+    const res = true;
+    for (let element of fileList) {
+      if (element.status === 'uploading') {
+        return;
+      }
+    }
+    return res;
+  };
+
+  const setAllFssFilesIntoState = fileList => {
+    return new Promise(function (resolve, reject) {
+      const newFssFiles = {};
+
+      for (let element of fileList) {
+        const extension = element.name.slice(-3, element.name.length);
+        if (validExtension('fss', extension) && validDuplicate(element, newFssFiles)) {
+          newFssFiles[element.name] = element.originFileObj;
+        } else {
+          element.status = 'error';
+        }
+      }
+
+      if (Object.keys(newFssFiles).length === fileList.length) {
+        resolve(newFssFiles);
+      } else {
+        reject(undefined);
+      }
+    });
+  };
+
+  const validExtension = (expect, actual) => {
+    if (expect !== actual) {
+      Modal.error({
+        title: 'File upload failed',
+        content: `At least one non-${expect} file uploaded`,
+      });
+      return false;
+    }
+    return true;
+  };
+
+  const validDuplicate = (candidateFile, newFssFiles) => {
+    if (newFssFiles !== undefined && newFssFiles[candidateFile.name] !== undefined) {
+      Modal.error({
+        title: 'File upload failed',
+        content: `${candidateFile.name} file is aleady uploaded`,
+      });
+      return false;
+    }
+    return true;
   };
 
   /*
@@ -149,7 +271,7 @@ const Reservation = () => {
   /*
     Submit button
   */
-  const [isPossibleSubmit, setIsPossibleSubmit] = useState(true);
+  const [isPossibleSubmit, setIsPossibleSubmit] = useState(false);
   const submitButtonProps = {
     type: 'primary',
     disabled: !isPossibleSubmit,
@@ -167,8 +289,11 @@ const Reservation = () => {
       console.log('handleSubmitOk');
       formData.append('user', 'USER1');
       formData.append('simulator', 'AMHS_SIM');
+      formData.append('version', version);
       formData.append('scenario', 'Scenario8');
-      formData.append('importFile', importFile);
+      formData.append('fslFile', fslFile);
+      formData.append('fssFiles', fssFiles['scenario1.fss']);
+      formData.append('fssFiles', fssFiles['scenario2.fss']);
       for (var value of formData.values()) {
         console.log('formData.values(): ', value);
       }
@@ -221,7 +346,6 @@ const Reservation = () => {
 
       try {
         validatePossibleToRserveApi('user4', 'SeeFlow', 'Scenario3').then(response => {
-          console.log(response.data);
           const validationModalTitle = 'Scenario reservation';
 
           if (response.data.status === true) {
@@ -249,17 +373,22 @@ const Reservation = () => {
     Hooks
   */
   useEffect(() => {
-    simulatorVersionListApi('all').then(response => {
+    simulatorVersionListApi('ALL').then(response => {
       console.log('RequestVersionList: ', response.data);
       setVersionList(response.data);
     });
   }, []);
 
   useEffect(() => {
-    if (isSimulatorSelected() && isFileUploaded()) {
+    if (isSimulatorSelected() && isVersionSelected() && isFslUploaded() && isFssUploaded()) {
+      // if (isSimulatorSelected() && isVersionSelected() && isFslUploaded()) {
+      // if (isSimulatorSelected() && isFslUploaded() && isFssUploaded()) {
+
       setIsPossibleSubmit(prev => true);
+    } else {
+      setIsPossibleSubmit(prev => false);
     }
-  }, [simulator, importFile]);
+  }, [simulator, version, fslFile, fssFiles]);
   const {Option} = Select;
 
   return (
@@ -283,15 +412,21 @@ const Reservation = () => {
         <VersionSelectComponent props={versionList} />
       </article>
       <article className={moduleCss.simulator_button_container}>
-        <h4>Scenario import</h4>
-        <Upload {...scenarioImportButtonProps}>
-          <Button icon={<UploadOutlined />}>Click to import</Button>
+        <h4>Import .fsl file</h4>
+        <Upload {...fslImportButtonProps}>
+          <Button icon={<UploadOutlined />}>Cilck to Import</Button>
         </Upload>
       </article>
-      <article>
-        <h4>Scenario description</h4>
-        <ScenarioDescription scenarioInfo={importFile} />
+      <article className={moduleCss.simulator_button_container}>
+        <h4>Import .fss files</h4>
+        <Upload {...fssImportButtonProps}>
+          <Button icon={<UploadOutlined />}>Cilck to Import</Button>
+        </Upload>
       </article>
+      {/* <article>
+        <h4>Scenario description</h4>
+        <ScenarioDescription scenarioInfo={fslFile} />
+      </article> */}
       <div>
         <Space size={'small'}>
           <Button {...submitButtonProps}>Submit</Button>
