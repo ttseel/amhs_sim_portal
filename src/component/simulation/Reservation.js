@@ -12,17 +12,20 @@ import {
   validatePossibleToRserveApi,
   reserveNewScenarioApi,
 } from '../../api/simulation/SimulationApis';
+import ScenarioName from './ScenarioName';
 
 const Reservation = () => {
   /*
     Simulator select
   */
-  const [simulator, setSimulator] = useState('AMHS_SIM');
+  const [simulator, setSimulator] = useState('MCPSIM');
   const isSimulatorSelected = () => {
     return simulator !== undefined;
   };
   const optionsWithDisabled = [
-    {label: 'AMHS_SIM', value: 'AMHS_SIM'},
+    {label: 'MCPSIM', value: 'MCPSIM'},
+    {label: 'OCS4SIM', value: 'OCS4SIM'},
+    {label: 'OCS3SIM', value: 'OCS3SIM'},
     {label: 'SeeFlow', value: 'SeeFlow'},
     {label: 'REMOTE_SIM', value: 'REMOTE_SIM', disabled: true},
   ];
@@ -41,7 +44,9 @@ const Reservation = () => {
   const initialVersionPhrase = 'Please select a version';
   const [version, setVersion] = useState({value: initialVersionPhrase});
   const [versionList, setVersionList] = useState({
-    AMHS_SIM: [initialVersionPhrase],
+    MCPSIM: [initialVersionPhrase],
+    OCS3SIM: [initialVersionPhrase],
+    OCS4SIM: [initialVersionPhrase],
     SEEFLOW: [initialVersionPhrase],
     REMOTE_SIM: [initialVersionPhrase],
   });
@@ -94,8 +99,9 @@ const Reservation = () => {
         const newFile = {};
         setFslFile(prev => newFile);
       }
-      if (checkAllFilesUploaded(event.fileList)) {
+      if (checkFileUploadIsCompleted(event.fileList)) {
         initAllFilesStatusToDone(event.fileList);
+        initfslNameStatus();
 
         if (!checkOnlyOneFileUploaded(event.fileList)) {
           for (let element of event.fileList) {
@@ -105,6 +111,7 @@ const Reservation = () => {
           setFslFile(prev => newFile);
           return;
         }
+
         for (let element of event.fileList) {
           const extension = element.name.slice(-3, element.name.length);
           if (!validExtension('fsl', extension)) {
@@ -118,8 +125,11 @@ const Reservation = () => {
         message.success(`${event.file.name} file uploaded successfully`);
 
         const file = event.file.originFileObj;
-        console.log('Imported file type: ' + typeof file);
+        console.log('Imported file: ', file);
         setFslFile(file);
+
+        setFslName(prev => file.name.slice(0, -4));
+        setNameVisible(prev => true);
 
         const reader = new FileReader();
         reader.onload = function () {
@@ -143,6 +153,8 @@ const Reservation = () => {
         content: `The allowed number of '.fsl' files is one.`,
       });
       return false;
+    } else if (fileList.length !== 1) {
+      return false;
     }
     return true;
   };
@@ -151,6 +163,7 @@ const Reservation = () => {
     .fss files import
   */
   const [fssFiles, setFssFiles] = useState({});
+  const [fssNameList, setFssNameList] = useState([]);
   const isFssUploaded = () => {
     return Object.keys(fssFiles).length !== 0;
   };
@@ -170,7 +183,7 @@ const Reservation = () => {
         // console.log(event.file, event.fileList);
       }
 
-      if (checkAllFilesUploaded(event.fileList)) {
+      if (checkFileUploadIsCompleted(event.fileList)) {
         setAllFssFilesIntoState(event.fileList)
           .then(result => {
             message.success(`all .fss files are uploaded successfully`);
@@ -181,7 +194,12 @@ const Reservation = () => {
           })
           .then(result => {
             setFssFiles(prev => result);
-            // setFssFiles(prev => [result['scenario1.fss'], result['scenario2.fss']]);
+
+            let newFssNameList = [];
+            Object.keys(result).map((element, index) => {
+              newFssNameList.push(element.slice(0, -4));
+            });
+            setFssNameList(prev => newFssNameList);
           })
           .catch(result => {
             const newFssFiles = {};
@@ -193,7 +211,7 @@ const Reservation = () => {
     },
   };
 
-  const checkAllFilesUploaded = fileList => {
+  const checkFileUploadIsCompleted = fileList => {
     const res = true;
     for (let element of fileList) {
       if (element.status === 'uploading') {
@@ -247,6 +265,16 @@ const Reservation = () => {
   };
 
   /*
+    Scenario Name
+   */
+  const [fslName, setFslName] = useState('');
+  const [nameVisible, setNameVisible] = useState(false);
+  const initfslNameStatus = () => {
+    setFslName(prev => '');
+    setNameVisible(prev => false);
+  };
+
+  /*
     Scenario description
   */
   // const [scenarioInfo, setScenarioInfo] = useState({});
@@ -263,10 +291,24 @@ const Reservation = () => {
     );
   };
 
-  const [modalTitle, setModalTitle] = useState(<ModalTitleComponent text="Request new reservation" color="#3b49cb" />);
-  const [visible, setVisible] = useState(false);
+  // Submit Modal
+  const [submitModalTitle, setModalTitle] = useState(
+    <ModalTitleComponent text="Request new reservation" color="#3b49cb" />,
+  );
+  const [submitModalVisible, setSubmitModalVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
-  const [modalText, setModalText] = useState();
+  const [submitModalText, setSubmitModalText] = useState();
+  const handleSubmitModalCancel = () => {
+    setSubmitModalVisible(false);
+  };
+
+  const submitModalProps = {
+    title: submitModalTitle,
+    visible: submitModalVisible,
+    onOk: handleSubmitOk,
+    confirmLoading: confirmLoading,
+    onCancel: handleSubmitModalCancel,
+  };
 
   /*
     Submit button
@@ -276,8 +318,8 @@ const Reservation = () => {
     type: 'primary',
     disabled: !isPossibleSubmit,
     onClick() {
-      setModalText(`Are you sure you want to reserve new scenario?`);
-      setVisible(true);
+      setSubmitModalText(`Are you sure you want to reserve new scenario?`);
+      setSubmitModalVisible(true);
     },
   };
 
@@ -287,47 +329,42 @@ const Reservation = () => {
     setConfirmLoading(true);
     try {
       console.log('handleSubmitOk');
-      formData.append('user', 'USER1');
-      formData.append('simulator', 'AMHS_SIM');
-      formData.append('version', version);
-      formData.append('scenario', 'Scenario8');
+      formData.append('user', 'USER2');
+      formData.append('simulator', simulator);
+      formData.append('version', version.label);
+      formData.append('fslName', fslName);
       formData.append('fslFile', fslFile);
-      formData.append('fssFiles', fssFiles['scenario1.fss']);
-      formData.append('fssFiles', fssFiles['scenario2.fss']);
+      for (let element of fssNameList) {
+        formData.append('fssNameList', element);
+      }
+      Object.keys(fssFiles).map((element, index) => {
+        formData.append('fssFiles', fssFiles[element]);
+      });
       for (var value of formData.values()) {
         console.log('formData.values(): ', value);
       }
 
       reserveNewScenarioApi(formData).then(response => {
         if (response.data.status === true) {
-          setIsPossibleSubmit(true);
+          // setIsPossibleSubmit(true);
           Modal.success({
-            title: modalTitle,
+            title: submitModalTitle,
             content: response.data.message,
-            onOk: e => {
-              <Link to="/simulation/SimBoard">Sim Board</Link>;
-            },
+            okButtonProps: {href: '/simulation/MySimulation'},
           });
         } else {
           Modal.error({
-            title: modalTitle,
+            title: submitModalTitle,
             content: response.data.message,
-            onOk: e => {
-              <Link to="/simulation/SimBoard">Sim Board</Link>;
-            },
           });
         }
       });
     } catch (error) {
       console.error(error);
     }
-    setVisible(false);
+    setSubmitModalVisible(false);
     setConfirmLoading(false);
   }
-
-  const handleSubmitCancel = () => {
-    setVisible(false);
-  };
 
   /*
     Validation button
@@ -381,14 +418,11 @@ const Reservation = () => {
 
   useEffect(() => {
     if (isSimulatorSelected() && isVersionSelected() && isFslUploaded() && isFssUploaded()) {
-      // if (isSimulatorSelected() && isVersionSelected() && isFslUploaded()) {
-      // if (isSimulatorSelected() && isFslUploaded() && isFssUploaded()) {
-
       setIsPossibleSubmit(prev => true);
     } else {
       setIsPossibleSubmit(prev => false);
     }
-  }, [simulator, version, fslFile, fssFiles]);
+  }, [simulator, version, fslFile, fssFiles, fssNameList]);
   const {Option} = Select;
 
   return (
@@ -423,6 +457,7 @@ const Reservation = () => {
           <Button icon={<UploadOutlined />}>Cilck to Import</Button>
         </Upload>
       </article>
+      <ScenarioName name={fslName} visible={nameVisible} />
       {/* <article>
         <h4>Scenario description</h4>
         <ScenarioDescription scenarioInfo={fslFile} />
@@ -433,14 +468,8 @@ const Reservation = () => {
           <Button {...valiationButtonProps}>Validation</Button>
         </Space>
       </div>
-      <Modal
-        title={modalTitle}
-        visible={visible}
-        onOk={handleSubmitOk}
-        confirmLoading={confirmLoading}
-        onCancel={handleSubmitCancel}
-      >
-        <p>{modalText}</p>
+      <Modal {...submitModalProps}>
+        <p>{submitModalText}</p>
       </Modal>
     </section>
   );

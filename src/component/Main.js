@@ -15,6 +15,7 @@ import './common/Title.css';
 import Summary from './simulation/Summary';
 import MySimulation from './simulation/MySimulation';
 import Reservation from './simulation/Reservation';
+import Download from './simulation/Download';
 
 const Main = () => {
   return (
@@ -58,6 +59,9 @@ const Main = () => {
         </Route>
         <Route path="/simulation/Reservation">
           <Reservation />
+        </Route>
+        <Route path="/simulation/Download">
+          <Download />
         </Route>
         <Route>
           <EmptyPage />
