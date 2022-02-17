@@ -5,11 +5,11 @@ import {deleteMyHistoryApi, downloadHistoryApi} from '../../api/simulation/Simul
 
 const HistoryTable = ({currentUser, data, setData}) => {
   const columns_cur_history = [
-    {
-      title: 'No',
-      dataIndex: 'no',
-      key: 'no',
-    },
+    // {
+    //   title: 'No',
+    //   dataIndex: 'no',
+    //   key: 'no',
+    // },
     {
       title: 'Scenario',
       dataIndex: 'scenario',
@@ -20,7 +20,21 @@ const HistoryTable = ({currentUser, data, setData}) => {
       dataIndex: 'simulator',
       key: 'simulator',
     },
-
+    {
+      title: 'Version',
+      dataIndex: 'version',
+      key: 'version',
+    },
+    {
+      title: 'Completed Rep',
+      dataIndex: 'completedRep',
+      key: 'completedRep',
+    },
+    {
+      title: 'Request Rep',
+      dataIndex: 'requestRep',
+      key: 'requestRep',
+    },
     {
       title: 'Start Date',
       dataIndex: 'startDate',
@@ -50,6 +64,11 @@ const HistoryTable = ({currentUser, data, setData}) => {
           })}
         </>
       ),
+    },
+    {
+      title: 'Execution Server',
+      dataIndex: 'executionServer',
+      key: 'executionServer',
     },
     {
       title: 'Result',

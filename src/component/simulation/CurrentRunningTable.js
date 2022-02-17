@@ -7,11 +7,11 @@ import {readCurrentRunningApi, stopSimulationApi} from '../../api/simulation/Sim
 
 const CurrentRunningTable = ({currentUser, data, setData}) => {
   const columns_cur_running = [
-    {
-      title: 'No',
-      dataIndex: 'no',
-      key: 'no',
-    },
+    // {
+    //   title: 'No',
+    //   dataIndex: 'no',
+    //   key: 'no',
+    // },
     {
       title: 'Scenario',
       dataIndex: 'scenario',

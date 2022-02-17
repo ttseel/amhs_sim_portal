@@ -7,11 +7,11 @@ import {cancelReservedScenarioApi} from '../../api/simulation/SimulationApis';
 
 const ReservedTable = ({currentUser, data, setData}) => {
   const columns_cur_reserved = [
-    {
-      title: 'No',
-      dataIndex: 'no',
-      key: 'no',
-    },
+    // {
+    //   title: 'No',
+    //   dataIndex: 'no',
+    //   key: 'no',
+    // },
     {
       title: 'Scenario',
       dataIndex: 'scenario',

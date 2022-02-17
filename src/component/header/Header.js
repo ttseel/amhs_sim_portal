@@ -1,6 +1,7 @@
 import React from 'react';
 import './Header.css';
 import {Link} from 'react-router-dom';
+import Download from '../simulation/Download';
 const Header = () => {
   return (
     <header className="header">
@@ -68,6 +69,9 @@ const Header = () => {
                 </li>
                 <li>
                   <Link to="/simulation/Reservation">Reservation</Link>
+                </li>
+                <li>
+                  <Link to="/simulation/Download">Download</Link>
                 </li>
               </ul>
             </li>
