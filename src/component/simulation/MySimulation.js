@@ -57,7 +57,7 @@ const mockDataHistory = [
 ];
 
 const MySimulation = () => {
-  const [currentUser, setCurrentUser] = useState('jinseop.oh');
+  const [currentUser, setCurrentUser] = useState('ADMIN');
   const [currentRunning, setCurrentRunning] = useState();
   const [reserved, setReserved] = useState();
   const [myHistory, setMyHistory] = useState();
