@@ -74,7 +74,7 @@ const mockDataReserved = [
 ];
 
 const Summary = () => {
-  const [currentUser, setCurrentUser] = useState('USER2');
+  const [currentUser, setCurrentUser] = useState('ADMIN');
   const [currentRunning, setCurrentRunning] = useState();
   const [reserved, setReserved] = useState();
   useEffect(() => {

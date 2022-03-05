@@ -67,8 +67,8 @@ export const reserveNewScenarioApi = formData => {
   });
 };
 
-export const validatePossibleToRserveApi = (user, simulator, scenario) => {
-  const uri = `http://localhost:8080/api/simulation/reservation/validate-reserve?user=${user}&simulator=${simulator}&scenario=${scenario}`;
+export const validatePossibleToRserveApi = (user, simulator, scenarioList) => {
+  const uri = `http://localhost:8080/api/simulation/reservation/validate-reserve?user=${user}&simulator=${simulator}&scenarioList=${scenarioList}`;
 
   return axios.get(uri);
 };
