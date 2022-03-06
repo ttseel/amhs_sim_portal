@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import './TabList.css';
-import TestComponent from '../../TestComponent';
 
 const EachTab = ({tabName, link, selectTab, changeTabMethod}) => {
   const [isClicked, setIsClicked] = useState(false);

@@ -113,7 +113,8 @@ const Reservation = () => {
         }
 
         for (let element of event.fileList) {
-          const extension = element.name.slice(-3, element.name.length);
+          const extension = splitFilenameAndExtension(element.name, 3)['extension'];
+
           if (!validExtension('fsl', extension)) {
             element.status = 'error';
 
@@ -128,7 +129,7 @@ const Reservation = () => {
         console.log('Imported file: ', file);
         setFslFile(file);
 
-        setFslName(prev => file.name.slice(0, -4));
+        setFslName(prev => splitFilenameAndExtension(file.name, 3)['filename']);
         setNameVisible(prev => true);
 
         const reader = new FileReader();
@@ -180,7 +181,6 @@ const Reservation = () => {
       if (event.file.status !== 'uploading') {
         const newFssFiles = {};
         setFssFiles(prev => newFssFiles);
-        // console.log(event.file, event.fileList);
       }
 
       if (checkFileUploadIsCompleted(event.fileList)) {
@@ -197,7 +197,7 @@ const Reservation = () => {
 
             let newFssNameList = [];
             Object.keys(result).map((element, index) => {
-              newFssNameList.push(element.slice(0, -4));
+              newFssNameList.push(splitFilenameAndExtension(element, 3)['filename']);
             });
             setFssNameList(prev => newFssNameList);
           })
@@ -226,7 +226,7 @@ const Reservation = () => {
       const newFssFiles = {};
 
       for (let element of fileList) {
-        const extension = element.name.slice(-3, element.name.length);
+        const extension = splitFilenameAndExtension(element.name, 3)['extension'];
         if (validExtension('fss', extension) && validDuplicate(element, newFssFiles)) {
           newFssFiles[element.name] = element.originFileObj;
         } else {
@@ -240,6 +240,13 @@ const Reservation = () => {
         reject(undefined);
       }
     });
+  };
+
+  const splitFilenameAndExtension = (fullname, extensionLength) => {
+    const result = {};
+    result['filename'] = fullname.slice(0, -extensionLength - 1);
+    result['extension'] = fullname.slice(-extensionLength, fullname.length);
+    return result;
   };
 
   const validExtension = (expect, actual) => {
@@ -328,7 +335,6 @@ const Reservation = () => {
   function handleSubmitOk() {
     setConfirmLoading(true);
     try {
-      console.log('handleSubmitOk');
       formData.append('user', 'USER2');
       formData.append('simulator', simulator);
       formData.append('version', version.label);
@@ -369,7 +375,7 @@ const Reservation = () => {
   /*
     Validation button
   */
-  const [isPossibleValidation, setIsPossibleValidation] = useState(true);
+  const [isPossibleValidation, setIsPossibleValidation] = useState(false);
   const valiationButtonProps = {
     type: isPossibleValidation === true ? 'primary' : 'dashed',
     style: {
@@ -379,24 +385,28 @@ const Reservation = () => {
     },
     disabled: !isPossibleValidation,
     onClick() {
-      console.log('Validation button clicked');
-
       try {
-        validatePossibleToRserveApi('user4', 'SeeFlow', 'Scenario3').then(response => {
+        const fssFileNameList = [];
+        for (const fileName of Object.keys(fssFiles)) {
+          fssFileNameList.push(splitFilenameAndExtension(fileName, 3)['filename']);
+        }
+
+        validatePossibleToRserveApi(currentUser, simulator, fssFileNameList).then(response => {
           const validationModalTitle = 'Scenario reservation';
 
           if (response.data.status === true) {
             setIsPossibleSubmit(true);
+
             Modal.success({
               title: validationModalTitle,
               content: response.data.message,
-              okButtonProps: {disabled: true, size: 'large'},
+              okButtonProps: {disabled: false, size: 'large'},
             });
           } else {
             Modal.error({
               title: validationModalTitle,
               content: response.data.message,
-              okButtonProps: {disabled: true, size: 'large'},
+              okButtonProps: {disabled: false, size: 'large'},
             });
           }
         });
@@ -405,6 +415,11 @@ const Reservation = () => {
       }
     },
   };
+  /*
+    Common Info
+  */
+  const [currentUser, setCurrentUser] = useState('ADMIN');
+  const {Option} = Select;
 
   /*
     Hooks
@@ -417,16 +432,16 @@ const Reservation = () => {
   }, []);
 
   useEffect(() => {
+    setIsPossibleSubmit(prev => false);
     if (isSimulatorSelected() && isVersionSelected() && isFslUploaded() && isFssUploaded()) {
-      setIsPossibleSubmit(prev => true);
+      setIsPossibleValidation(prev => true);
     } else {
-      setIsPossibleSubmit(prev => false);
+      setIsPossibleValidation(prev => false);
     }
   }, [simulator, version, fslFile, fssFiles, fssNameList]);
-  const {Option} = Select;
 
   return (
-    <section style={{fontSize: 20}} className={moduleCss.reservation_sectio_wrapper}>
+    <section style={{fontSize: 20}} className={moduleCss.reservation_section_wrapper}>
       <h3 className="sub_title">
         <img src="/component/simulation/reservation.png" alt="reservation.png"></img>
         <em>Reservation</em>
