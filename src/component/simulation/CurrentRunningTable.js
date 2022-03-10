@@ -13,6 +13,11 @@ const CurrentRunningTable = ({currentUser, data, setData}) => {
     //   key: 'no',
     // },
     {
+      title: 'Group',
+      dataIndex: 'group',
+      key: 'group',
+    },
+    {
       title: 'Scenario',
       dataIndex: 'scenario',
       key: 'scenario',
@@ -48,7 +53,7 @@ const CurrentRunningTable = ({currentUser, data, setData}) => {
       ),
     },
     {
-      title: 'Start Date',
+      title: 'Start',
       dataIndex: 'startDate',
       key: 'startDate',
     },
@@ -68,7 +73,7 @@ const CurrentRunningTable = ({currentUser, data, setData}) => {
       key: 'requestRep',
     },
     {
-      title: 'Execution Server',
+      title: 'Server',
       dataIndex: 'executionServer',
       key: 'executionServer',
     },
@@ -94,12 +99,14 @@ const CurrentRunningTable = ({currentUser, data, setData}) => {
   const [recordNo, setRecordNo] = useState();
   const [recordUser, setRecordUser] = useState();
   const [recordSimulator, setRecordSimulator] = useState();
+  const [recordGroup, setRecordGroup] = useState();
   const [recordScenario, setRecordScenario] = useState();
 
   const showRequestModal = record => {
     setRecordNo(record.no);
     setRecordUser(record.user);
     setRecordSimulator(record.simulator);
+    setRecordGroup(record.group);
     setRecordScenario(record.scenario);
     setModalText(`Are you sure you want to stop the ${record.scenario} that ${record.user} has reserved?`);
     setVisible(true);
@@ -117,13 +124,19 @@ const CurrentRunningTable = ({currentUser, data, setData}) => {
     }
   };
 
+  const uniqueSimRecordDto = new FormData();
+
   function handleOk() {
     setConfirmLoading(true);
     try {
-      stopSimulationApi(recordUser, recordSimulator, recordScenario).then(response => {
+      uniqueSimRecordDto.append('user', recordUser);
+      uniqueSimRecordDto.append('simulator', recordSimulator);
+      uniqueSimRecordDto.append('group', recordGroup);
+      uniqueSimRecordDto.append('scenario', recordScenario);
+      stopSimulationApi(uniqueSimRecordDto).then(response => {
         // status 200: 서버의 응답이 성공했다는 HTTP 상태 코드
         if (response.status === 200) {
-          if (response.data === true) {
+          if (response.data.status === true) {
             showResultModal(response.data, `${recordScenario} stopped successfully`);
             removeRecordFromList();
           } else {

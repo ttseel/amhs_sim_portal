@@ -11,6 +11,11 @@ const HistoryTable = ({currentUser, data, setData}) => {
     //   key: 'no',
     // },
     {
+      title: 'Group',
+      dataIndex: 'group',
+      key: 'group',
+    },
+    {
       title: 'Scenario',
       dataIndex: 'scenario',
       key: 'scenario',
@@ -26,27 +31,27 @@ const HistoryTable = ({currentUser, data, setData}) => {
       key: 'version',
     },
     {
-      title: 'Completed Rep',
-      dataIndex: 'completedRep',
-      key: 'completedRep',
+      title: 'End Rep',
+      dataIndex: 'endRep',
+      key: 'endRep',
     },
     {
       title: 'Request Rep',
       dataIndex: 'requestRep',
       key: 'requestRep',
     },
+    // {
+    //   title: 'Start',
+    //   dataIndex: 'startDate',
+    //   key: 'startDate',
+    // },
     {
-      title: 'Start Date',
-      dataIndex: 'startDate',
-      key: 'startDate',
-    },
-    {
-      title: 'End Date',
+      title: 'End',
       dataIndex: 'endDate',
       key: 'endDate',
     },
     {
-      title: 'Termination Reason',
+      title: 'Reason',
       dataIndex: 'terminationReason',
       key: 'terminationReason',
       render: terminationReason => (
@@ -66,7 +71,7 @@ const HistoryTable = ({currentUser, data, setData}) => {
       ),
     },
     {
-      title: 'Execution Server',
+      title: 'Server',
       dataIndex: 'executionServer',
       key: 'executionServer',
     },
@@ -100,13 +105,14 @@ const HistoryTable = ({currentUser, data, setData}) => {
 
   const requestDownload = record => {
     try {
-      downloadHistoryApi(currentUser, record.simulator, record.scenario).then(response => {
+      console.log(record);
+      downloadHistoryApi(currentUser, record.simulator, record.group, record.scenario).then(response => {
         // status 200: 서버의 응답이 성공했다는 HTTP 상태 코드
         if (response.status === 200) {
           const url = window.URL.createObjectURL(new Blob([response.data], {type: response.headers['content-type']}));
           const link = document.createElement('a');
           link.href = url;
-          link.setAttribute('download', `${record.simulator}-${record.scenario}.zip`);
+          link.setAttribute('download', `${record.scenario}.zip`);
           document.body.appendChild(link);
           link.click();
         } else {
