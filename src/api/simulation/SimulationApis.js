@@ -18,10 +18,18 @@ export const readMyHistoryApi = user => {
   return axios.get(uri);
 };
 
-export const stopSimulationApi = (user, simulator, scenario) => {
-  const uri = `http://localhost:8080/api/simulation/simboard/stop-sim?user=${user}&simulator=${simulator}&scenario=${scenario}`;
+export const stopSimulationApi = uniqueSimRecordDto => {
+  // const uri = `http://localhost:8080/api/simulation/simboard/stop-sim?user=${user}&simulator=${simulator}&scenario=${scenario}`;
+  const uri = `http://localhost:8080/api/simulation/simboard/stop-sim`;
 
-  return axios.delete(uri);
+  return axios({
+    method: 'delete',
+    url: uri,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    data: uniqueSimRecordDto,
+  });
 };
 
 export const cancelReservedScenarioApi = (user, simulator, scenario) => {
@@ -30,8 +38,8 @@ export const cancelReservedScenarioApi = (user, simulator, scenario) => {
   return axios.delete(uri);
 };
 
-export const downloadHistoryApi = (user, simulator, scenario) => {
-  const uri = `http://localhost:8080/api/simulation/my-simulation/download-my-history?user=${user}&simulator=${simulator}&scenario=${scenario}`;
+export const downloadHistoryApi = (user, simulator, group, scenario) => {
+  const uri = `http://localhost:8080/api/simulation/my-simulation/download-my-history?user=${user}&simulator=${simulator}&group=${group}&scenario=${scenario}`;
 
   return axios({
     method: 'get',

@@ -13,6 +13,11 @@ const ReservedTable = ({currentUser, data, setData}) => {
     //   key: 'no',
     // },
     {
+      title: 'Group',
+      dataIndex: 'group',
+      key: 'group',
+    },
+    {
       title: 'Scenario',
       dataIndex: 'scenario',
       key: 'scenario',
