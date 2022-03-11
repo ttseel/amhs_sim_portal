@@ -1,2 +1,2 @@
 # AMHS Sim Portal
-AMHS Web Simulation Portal 백엔드 서버 데모
+AMHS Web Simulation Portal UI 데모
