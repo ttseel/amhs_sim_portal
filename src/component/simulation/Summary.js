@@ -6,6 +6,37 @@ import Reservation from './Reservation';
 import CurrentRunningTable from './CurrentRunningTable';
 import ReservedTable from './ReservedTable';
 import {readCurrentRunningApi, readReservedScenarioApi} from '../../api/simulation/SimulationApis';
+import ServerStatusBoard from './ServerStatusBoard';
+
+const mockServerInfos = [
+  {
+    key: '1',
+    serverName: 'Server #1',
+    displayName: 'Easy',
+    status: 'success',
+    running: 4,
+    cpu: 68,
+    ram: 64,
+  },
+  {
+    key: '2',
+    serverName: 'Server #2',
+    displayName: 'Easy',
+    status: 'success',
+    running: 5,
+    cpu: 65,
+    ram: 73,
+  },
+  {
+    key: '3',
+    serverName: 'Server #3',
+    displayName: 'Busy',
+    status: 'exception',
+    running: 7,
+    cpu: 87,
+    ram: 89,
+  },
+];
 
 const mockDataCurrentRunning = [
   {
@@ -75,9 +106,13 @@ const mockDataReserved = [
 
 const Summary = () => {
   const [currentUser, setCurrentUser] = useState('ADMIN');
+  const [serverInfos, setServerInfos] = useState({});
   const [currentRunning, setCurrentRunning] = useState();
   const [reserved, setReserved] = useState();
+
   useEffect(() => {
+    // setServerInfos(prev => mockServerInfos);
+
     readCurrentRunningApi('all').then(response => {
       console.log('readCurrentRunningApi(all): ', response.data);
       setCurrentRunning(response.data);
@@ -94,6 +129,9 @@ const Summary = () => {
       <h3 className="sub_title">
         <img src="/component/simulation/simboard.png"></img>
         <em>Summary</em>
+        <section>
+          <ServerStatusBoard serverInfos={mockServerInfos} />
+        </section>
         <section>
           <CurrentRunningTable currentUser={currentUser} data={currentRunning} setData={setCurrentRunning} />
         </section>
