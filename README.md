@@ -1,2 +1,10 @@
-# AMHS Sim Portal
-AMHS Web Simulation Portal UI 데모
+# Simulation Portal
+## 삼성전자 반도체 물류 시뮬레이션 포탈을 개발하는 과정에서 데모로 개발한 프로젝트입니다
+
+사내에서 구현된 서비스와 차이가 있으며, 보안에 저촉되지 않는 선에서 구현하였습니다.
+
+본 서비스는 다음과 같은 기능을 제공합니다
+
+### 도메인 데이터 조회  
+
+![다운로드](https://user-images.githubusercontent.com/66378928/158269074-a83ca97d-9ee3-47d4-a0ab-6a934378fa65.png)
