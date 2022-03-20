@@ -169,7 +169,7 @@ const CurrentRunningTable = ({currentUser, data, setData}) => {
   return (
     <div>
       <h4 style={{fontSize: 25}}>Current running</h4>
-      <Table columns={columns_cur_running} dataSource={data} />
+      <Table columns={columns_cur_running} dataSource={data} pagination={{pageSize: 5}} />
       <Modal
         title={modalTitle}
         visible={visible}
