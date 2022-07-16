@@ -2,6 +2,8 @@ import React from 'react';
 import './Header.css';
 import {Link} from 'react-router-dom';
 import Download from '../simulation/Download';
+import AdminHome from '../admin/AdminHome';
+
 const Header = () => {
   return (
     <header className="header">
@@ -74,6 +76,11 @@ const Header = () => {
                   <Link to="/simulation/Download">Download</Link>
                 </li>
               </ul>
+            </li>
+            <li className="main_menu_li">
+              <a className="main_menu_a">
+                <Link to="/admin/AdminHome">Admin</Link>
+              </a>
             </li>
           </ul>
         </nav>

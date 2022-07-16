@@ -1,0 +1,16 @@
+.admin_home_wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.admin_navigator_wrapper {
+  width: 260px;
+}
+
+.admin_frame_wrapper {
+  max-width: 1140px;
+  flex-grow: 1;
+  /* vertical-align: top; */
+  margin: 0 20px 0 20px;
+}

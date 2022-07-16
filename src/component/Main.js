@@ -16,6 +16,7 @@ import Summary from './simulation/Summary';
 import MySimulation from './simulation/MySimulation';
 import Reservation from './simulation/Reservation';
 import Download from './simulation/Download';
+import AdminHome from './admin/AdminHome';
 
 const Main = () => {
   return (
