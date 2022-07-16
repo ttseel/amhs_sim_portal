@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import '../common/Title.css';
 import './SendfabNetwork.css';
 import {ResponsiveChord} from '@nivo/chord';
-import LocalData from '../../db/SendfabNetwork.json';
 
 const matrix = [
   [0, 1948, 577, 419, 315],
@@ -61,20 +60,21 @@ const MyResponsiveChord = ({keys, matrix}) => {
   );
 };
 
-const SendfabNetwork = ({curLine, curYear, curMonth}) => {
+const SendfabNetwork = ({data, curLine, curYear, curMonth}) => {
   const curMatrix = [];
   const keys = [];
 
-  const response = LocalData; // server에 요청 후 json 타입으로 받음
-  response['keys'].map(lineId => {
+  console.log(data);
+
+  data['keys'].map(lineId => {
     keys.push(lineId);
-    curMatrix.push(response[lineId]);
+    curMatrix.push(data[lineId]);
   });
 
   return (
     <article className="network_article_layout">
       <h4>Sendfab Network</h4>
-      <MyResponsiveChord keys={response.keys} matrix={curMatrix} />
+      <MyResponsiveChord keys={data.keys} matrix={curMatrix} />
     </article>
   );
 };

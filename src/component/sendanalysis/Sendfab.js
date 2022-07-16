@@ -8,6 +8,7 @@ import NetworkTable from './NetworkTable';
 import SendfabNetwork from './SendfabNetwork';
 import InterfaceChart from './InterfaceChart';
 import LocalData from '../../db/Sendfab.json';
+import LocalData_network from '../../db/SendfabNetwork.json';
 
 const getDisplayLines = defaultLine => {
   const curLines = {
@@ -94,6 +95,7 @@ const Sendfab = () => {
   };
 
   const response = LocalData;
+  const response_network = LocalData_network; // server에 요청 후 json 타입으로 받음
 
   return (
     <div>
@@ -102,9 +104,9 @@ const Sendfab = () => {
         층/동간 반송량 Trend
       </h3>
       <div className={moduleCss.filter_wrapper}>
-        <div>
+        {/* <div>
           <TabList styleName={'tab_list'} tabList={displayLines} links={linkOfLines} changeStateMethod={setCurLine} />
-        </div>
+        </div> */}
         <div>
           <form className="year_list_wrapper">
             <select className="year_list" onChange={onSubmit} value={curYear}>
@@ -126,16 +128,22 @@ const Sendfab = () => {
         </div>
       </div>
       <div>
+        <h2 style={{fontSize: 25, fontWeight: 'bold'}}>SITE A</h2>
         <section className={moduleCss.section_layout}>
-          <SendfabNetwork curLine={curLine} />
-          <NetworkTable data={response.NetworkTable} />
+          <SendfabNetwork data={response_network.SendfabNetwork_A} curLine={curLine} />
+          <NetworkTable data={response.NetworkTable_A} />
+        </section>
+        <h2 style={{fontSize: 25, fontWeight: 'bold'}}>SITE B</h2>
+        <section className={moduleCss.section_layout}>
+          <SendfabNetwork data={response_network.SendfabNetwork_B} curLine={curLine} />
+          <NetworkTable data={response.NetworkTable_B} />
         </section>
       </div>
-      <div>
+      {/* <div>
         <section className={moduleCss.section_layout}>
           <InterfaceChart />
         </section>
-      </div>
+      </div> */}
     </div>
   );
 };

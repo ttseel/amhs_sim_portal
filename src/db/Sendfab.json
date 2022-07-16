@@ -13,7 +13,7 @@
     "16L_8L":	["194","97","0","0","156","0","0","0","0"],
     "Other Site":	["0","0","0","0","735","135","0","0","0"]
   },
-  "NetworkTable": [
+  "NetworkTable_Original": [
     {"key":1,"interface":"12(7F) - 13(3F)","fromLine":"12","fromFloor":"7","toLine":"13","toFloor":"3","orgLinekey":"KFBC","count":"220"},
     {"key":2,"interface":"12(7F) - U1(2F)","fromLine":"12","fromFloor":"7","toLine":"U1","toFloor":"2","orgLinekey":"KFBC","count":"0"},
     {"key":3,"interface":"12(7F) - U1(4F)","fromLine":"12","fromFloor":"7","toLine":"U1","toFloor":"4","orgLinekey":"KFBC","count":"0"},
@@ -34,6 +34,52 @@
     {"key":18,"interface":"13(3F) - U1(4F)","fromLine":"13","fromFloor":"3","toLine":"U1","toFloor":"4","orgLinekey":"KFBE","count":"30"},
     {"key":19,"interface":"13(3F) - M(2F)","fromLine":"13","fromFloor":"3","toLine":"M","toFloor":"2","orgLinekey":"KFBE","count":"27"},
     {"key":20,"interface":"13(3F) - M(4F)","fromLine":"13","fromFloor":"3","toLine":"M","toFloor":"4","orgLinekey":"KFBE","count":"17"}
+  ],
+
+  "NetworkTable_A": [
+    {"key":1,"interface":"A(3F) - B(4F)","fromLine":"A","fromFloor":"7","toLine":"E","toFloor":"3","orgLinekey":"KFBC","count":"220"},
+    {"key":2,"interface":"A(7F) - C(2F)","fromLine":"A","fromFloor":"7","toLine":"C","toFloor":"2","orgLinekey":"KFBC","count":"0"},
+    {"key":3,"interface":"A(7F) - C(4F)","fromLine":"A","fromFloor":"7","toLine":"C","toFloor":"4","orgLinekey":"KFBC","count":"0"},
+    {"key":4,"interface":"A(7F) - D(2F)","fromLine":"A","fromFloor":"7","toLine":"D","toFloor":"2","orgLinekey":"KFBC","count":"7"},
+    {"key":5,"interface":"A(7F) - D(4F)","fromLine":"A","fromFloor":"7","toLine":"D","toFloor":"4","orgLinekey":"KFBC","count":"25"},
+    {"key":6,"interface":"A(3F) - B(4F)","fromLine":"E","fromFloor":"3","toLine":"A","toFloor":"7","orgLinekey":"KFBC","count":"398"},
+    {"key":7,"interface":"E(3F) - C(2F)","fromLine":"E","fromFloor":"3","toLine":"C","toFloor":"2","orgLinekey":"KFBC","count":"81"},
+    {"key":8,"interface":"E(3F) - C(4F)","fromLine":"E","fromFloor":"3","toLine":"C","toFloor":"4","orgLinekey":"KFBC","count":"55"},
+    {"key":9,"interface":"E(3F) - D(2F)","fromLine":"E","fromFloor":"3","toLine":"D","toFloor":"2","orgLinekey":"KFBC","count":"49"},
+    {"key":10,"interface":"E(3F) - D(4F)","fromLine":"E","fromFloor":"3","toLine":"D","toFloor":"4","orgLinekey":"KFBC","count":"32"},
+    {"key":11,"interface":"A(3F) - B(4F)","fromLine":"A","fromFloor":"7","toLine":"E","toFloor":"3","orgLinekey":"KFBE","count":"119"},
+    {"key":12,"interface":"A(7F) - C(2F)","fromLine":"A","fromFloor":"7","toLine":"C","toFloor":"2","orgLinekey":"KFBE","count":"0"},
+    {"key":13,"interface":"A(7F) - C(4F)","fromLine":"A","fromFloor":"7","toLine":"C","toFloor":"4","orgLinekey":"KFBE","count":"0"},
+    {"key":14,"interface":"A(7F) - D(2F)","fromLine":"A","fromFloor":"7","toLine":"D","toFloor":"2","orgLinekey":"KFBE","count":"4"},
+    {"key":15,"interface":"A(7F) - D(4F)","fromLine":"A","fromFloor":"7","toLine":"D","toFloor":"4","orgLinekey":"KFBE","count":"14"},
+    {"key":16,"interface":"A(3F) - B(4F)","fromLine":"E","fromFloor":"3","toLine":"A","toFloor":"7","orgLinekey":"KFBE","count":"215"},
+    {"key":17,"interface":"E(3F) - C(2F)","fromLine":"E","fromFloor":"3","toLine":"C","toFloor":"2","orgLinekey":"KFBE","count":"44"},
+    {"key":18,"interface":"E(3F) - C(4F)","fromLine":"E","fromFloor":"3","toLine":"C","toFloor":"4","orgLinekey":"KFBE","count":"30"},
+    {"key":19,"interface":"E(3F) - D(2F)","fromLine":"E","fromFloor":"3","toLine":"D","toFloor":"2","orgLinekey":"KFBE","count":"27"},
+    {"key":20,"interface":"E(3F) - D(4F)","fromLine":"E","fromFloor":"3","toLine":"D","toFloor":"4","orgLinekey":"KFBE","count":"17"}
+  ],
+
+  "NetworkTable_B": [
+    {"key":1,"interface":"A(3F) - B(4F)","fromLine":"A","fromFloor":"7","toLine":"E","toFloor":"3","orgLinekey":"KFBC","count":"125"},
+    {"key":2,"interface":"A(7F) - C(2F)","fromLine":"A","fromFloor":"7","toLine":"C","toFloor":"2","orgLinekey":"KFBC","count":"50"},
+    {"key":3,"interface":"A(7F) - C(4F)","fromLine":"A","fromFloor":"7","toLine":"C","toFloor":"4","orgLinekey":"KFBC","count":"33"},
+    {"key":4,"interface":"A(7F) - D(2F)","fromLine":"A","fromFloor":"7","toLine":"D","toFloor":"2","orgLinekey":"KFBC","count":"84"},
+    {"key":5,"interface":"A(7F) - D(4F)","fromLine":"A","fromFloor":"7","toLine":"D","toFloor":"4","orgLinekey":"KFBC","count":"99"},
+    {"key":6,"interface":"A(3F) - B(4F)","fromLine":"E","fromFloor":"3","toLine":"A","toFloor":"7","orgLinekey":"KFBC","count":"98"},
+    {"key":7,"interface":"E(3F) - C(2F)","fromLine":"E","fromFloor":"3","toLine":"C","toFloor":"2","orgLinekey":"KFBC","count":"87"},
+    {"key":8,"interface":"E(3F) - C(4F)","fromLine":"E","fromFloor":"3","toLine":"C","toFloor":"4","orgLinekey":"KFBC","count":"56"},
+    {"key":9,"interface":"E(3F) - D(2F)","fromLine":"E","fromFloor":"3","toLine":"D","toFloor":"2","orgLinekey":"KFBC","count":"325"},
+    {"key":10,"interface":"E(3F) - D(4F)","fromLine":"E","fromFloor":"3","toLine":"D","toFloor":"4","orgLinekey":"KFBC","count":"320"},
+    {"key":11,"interface":"A(3F) - B(4F)","fromLine":"A","fromFloor":"7","toLine":"E","toFloor":"3","orgLinekey":"KFBE","count":"159"},
+    {"key":12,"interface":"A(7F) - C(2F)","fromLine":"A","fromFloor":"7","toLine":"C","toFloor":"2","orgLinekey":"KFBE","count":"19"},
+    {"key":13,"interface":"A(7F) - C(4F)","fromLine":"A","fromFloor":"7","toLine":"C","toFloor":"4","orgLinekey":"KFBE","count":"50"},
+    {"key":14,"interface":"A(7F) - D(2F)","fromLine":"A","fromFloor":"7","toLine":"D","toFloor":"2","orgLinekey":"KFBE","count":"43"},
+    {"key":15,"interface":"A(7F) - D(4F)","fromLine":"A","fromFloor":"7","toLine":"D","toFloor":"4","orgLinekey":"KFBE","count":"154"},
+    {"key":16,"interface":"A(3F) - B(4F)","fromLine":"E","fromFloor":"3","toLine":"A","toFloor":"7","orgLinekey":"KFBE","count":"295"},
+    {"key":17,"interface":"E(3F) - C(2F)","fromLine":"E","fromFloor":"3","toLine":"C","toFloor":"2","orgLinekey":"KFBE","count":"442"},
+    {"key":18,"interface":"E(3F) - C(4F)","fromLine":"E","fromFloor":"3","toLine":"C","toFloor":"4","orgLinekey":"KFBE","count":"330"},
+    {"key":19,"interface":"E(3F) - D(2F)","fromLine":"E","fromFloor":"3","toLine":"D","toFloor":"2","orgLinekey":"KFBE","count":"275"},
+    {"key":20,"interface":"E(3F) - D(4F)","fromLine":"E","fromFloor":"3","toLine":"D","toFloor":"4","orgLinekey":"KFBE","count":"117"}
   ],
   "InterfaceChart": {
     "12(7F) - 13(3F)":{},
