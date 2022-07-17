@@ -2,14 +2,71 @@ import React, {useState} from 'react';
 import 'antd/dist/antd.css';
 import {Table, Tag, Space, Modal} from 'antd';
 import {deleteMyHistoryApi, downloadHistoryApi} from '../../api/simulation/SimulationApis';
+import {readCurrentRunningApi, stopSimulationApi} from '../../api/simulation/SimulationApis';
 
-const HistoryTable = ({currentUser, data, setData}) => {
-  const columns_cur_history = [
-    // {
-    //   title: 'No',
-    //   dataIndex: 'no',
-    //   key: 'no',
-    // },
+const MyHistoryTable = ({currentUser, data, setData}) => {
+  console.log('data:', data);
+
+  const expandedRowRender = (record, index, indent, expanded) => {
+    // console.log(record);
+    const columns_child = [
+      {
+        title: 'Random Seed',
+        dataIndex: 'randomSeed',
+        key: 'randomSeed',
+      },
+      {
+        title: 'Status',
+        dataIndex: 'status',
+        key: 'status',
+      },
+      {
+        title: 'Termination Reason',
+        dataIndex: 'reason',
+        key: 'reason',
+        render: reason => (
+          <>
+            {reason.map(reason => {
+              if (reason === '-') {
+                return <div>-</div>;
+              }
+
+              let color = '';
+              if (reason === 'NORMAL') {
+                color = 'green';
+              } else if (reason === 'ABNORMAL') {
+                color = 'red';
+              }
+
+              return (
+                <Tag color={color} key={reason}>
+                  {reason.toUpperCase()}
+                </Tag>
+              );
+            })}
+          </>
+        ),
+      },
+      {
+        title: 'Server',
+        dataIndex: 'server',
+        key: 'server',
+      },
+      {
+        title: 'Start',
+        dataIndex: 'start',
+        key: 'start',
+      },
+    ];
+
+    return (
+      <div>
+        <Table columns={columns_child} dataSource={record.replication} pagination={false} size={'large'} />
+      </div>
+    );
+  };
+
+  const columns_parent = [
     {
       title: 'Group',
       dataIndex: 'group',
@@ -31,49 +88,29 @@ const HistoryTable = ({currentUser, data, setData}) => {
       key: 'version',
     },
     {
-      title: 'End Rep',
-      dataIndex: 'endRep',
-      key: 'endRep',
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
     },
     {
-      title: 'Request Rep',
-      dataIndex: 'requestRep',
-      key: 'requestRep',
-    },
-    // {
-    //   title: 'Start',
-    //   dataIndex: 'startDate',
-    //   key: 'startDate',
-    // },
-    {
-      title: 'End',
-      dataIndex: 'endDate',
-      key: 'endDate',
-    },
-    {
-      title: 'Reason',
-      dataIndex: 'terminationReason',
-      key: 'terminationReason',
-      render: terminationReason => (
+      title: 'User',
+      key: 'user',
+      dataIndex: 'user',
+      render: user => (
         <>
-          {terminationReason.map(reason => {
-            let color = 'green';
-            if (reason === 'ABNORMAL') {
-              color = 'red';
+          {user.map(tag => {
+            let color = tag.length > 5 ? 'geekblue' : 'orange';
+            if (tag === currentUser) {
+              color = 'geekblue';
             }
             return (
-              <Tag color={color} key={reason}>
-                {reason.toUpperCase()}
+              <Tag color={color} key={tag}>
+                {tag.toUpperCase()}
               </Tag>
             );
           })}
         </>
       ),
-    },
-    {
-      title: 'Server',
-      dataIndex: 'executionServer',
-      key: 'executionServer',
     },
     {
       title: 'Result',
@@ -191,8 +228,14 @@ const HistoryTable = ({currentUser, data, setData}) => {
 
   return (
     <div>
-      <h4 style={{fontSize: 25}}>My History</h4>
-      <Table columns={columns_cur_history} dataSource={data} />
+      <Table
+        columns={columns_parent}
+        expandable={{
+          expandedRowRender,
+        }}
+        dataSource={data}
+        size="middle"
+      />
       <Modal
         title={modalTitle}
         visible={visible}
@@ -206,4 +249,4 @@ const HistoryTable = ({currentUser, data, setData}) => {
   );
 };
 
-export default HistoryTable;
+export default MyHistoryTable;

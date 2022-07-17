@@ -1,17 +1,71 @@
 import React, {useState, useEffect} from 'react';
-import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
-import {Table, Tag, Space, Modal} from 'antd';
-import Reservation from './Reservation';
+import {Space, Table, Tag, Modal} from 'antd';
 import {readCurrentRunningApi, stopSimulationApi} from '../../api/simulation/SimulationApis';
 
-const CurrentRunningTable = ({currentUser, data, setData}) => {
-  const columns_cur_running = [
-    // {
-    //   title: 'No',
-    //   dataIndex: 'no',
-    //   key: 'no',
-    // },
+const ScenarioTable = ({currentUser, data, setData}) => {
+  console.log('data:' + data);
+
+  const expandedRowRender = (record, index, indent, expanded) => {
+    // console.log(record);
+    const columns_child = [
+      {
+        title: 'Random Seed',
+        dataIndex: 'randomSeed',
+        key: 'randomSeed',
+      },
+      {
+        title: 'Status',
+        dataIndex: 'status',
+        key: 'status',
+      },
+      {
+        title: 'Termination Reason',
+        dataIndex: 'reason',
+        key: 'reason',
+        render: reason => (
+          <>
+            {reason.map(reason => {
+              if (reason === '-') {
+                return <div>-</div>;
+              }
+
+              let color = '';
+              if (reason === 'NORMAL') {
+                color = 'green';
+              } else if (reason === 'ABNORMAL') {
+                color = 'red';
+              }
+
+              return (
+                <Tag color={color} key={reason}>
+                  {reason.toUpperCase()}
+                </Tag>
+              );
+            })}
+          </>
+        ),
+      },
+      {
+        title: 'Server',
+        dataIndex: 'server',
+        key: 'server',
+      },
+      {
+        title: 'Start',
+        dataIndex: 'start',
+        key: 'start',
+      },
+    ];
+
+    return (
+      <div>
+        <Table columns={columns_child} dataSource={record.replication} pagination={false} size={'large'} />
+      </div>
+    );
+  };
+
+  const columns_parent = [
     {
       title: 'Group',
       dataIndex: 'group',
@@ -31,6 +85,11 @@ const CurrentRunningTable = ({currentUser, data, setData}) => {
       title: 'Version',
       dataIndex: 'version',
       key: 'version',
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
     },
     {
       title: 'User',
@@ -53,38 +112,13 @@ const CurrentRunningTable = ({currentUser, data, setData}) => {
       ),
     },
     {
-      title: 'Start',
-      dataIndex: 'startDate',
-      key: 'startDate',
-    },
-    {
-      title: 'Running Time',
-      dataIndex: 'runningTime',
-      key: 'runningTime',
-    },
-    {
-      title: 'Current Rep',
-      dataIndex: 'currentRep',
-      key: 'currentRep',
-    },
-    {
-      title: 'Request Rep',
-      dataIndex: 'requestRep',
-      key: 'requestRep',
-    },
-    {
-      title: 'Server',
-      dataIndex: 'executionServer',
-      key: 'executionServer',
-    },
-    {
-      title: 'Request Stop',
-      key: 'stop',
+      title: 'Cancel',
+      key: 'cancel',
       render: (text, record) => (
         <>
           <Space size="middle">
             <a style={{color: 'red'}} onClick={() => showRequestModal(record)}>
-              Stop
+              Cancel
             </a>
           </Space>
         </>
@@ -92,7 +126,7 @@ const CurrentRunningTable = ({currentUser, data, setData}) => {
     },
   ];
 
-  const modalTitle = 'Request Stop';
+  const modalTitle = 'Request Cancel';
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState();
@@ -130,7 +164,6 @@ const CurrentRunningTable = ({currentUser, data, setData}) => {
     setConfirmLoading(true);
     try {
       uniqueSimRecordDto.append('user', recordUser);
-      uniqueSimRecordDto.append('simulator', recordSimulator);
       uniqueSimRecordDto.append('group', recordGroup);
       uniqueSimRecordDto.append('scenario', recordScenario);
       stopSimulationApi(uniqueSimRecordDto).then(response => {
@@ -168,8 +201,14 @@ const CurrentRunningTable = ({currentUser, data, setData}) => {
 
   return (
     <div>
-      <h4 style={{fontSize: 25}}>Current running</h4>
-      <Table columns={columns_cur_running} dataSource={data} pagination={{pageSize: 5}} />
+      <Table
+        columns={columns_parent}
+        expandable={{
+          expandedRowRender,
+        }}
+        dataSource={data}
+        size="middle"
+      />
       <Modal
         title={modalTitle}
         visible={visible}
@@ -183,4 +222,4 @@ const CurrentRunningTable = ({currentUser, data, setData}) => {
   );
 };
 
-export default CurrentRunningTable;
+export default ScenarioTable;
