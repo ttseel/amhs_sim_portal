@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import {Table, Tag, Space} from 'antd';
 import Reservation from './Reservation';
-import CurrentRunningTable from './CurrentRunningTable';
-import ReservedTable from './ReservedTable';
+import ScenarioTable from './ScenarioTable';
 import {readCurrentRunningApi, readReservedScenarioApi} from '../../api/simulation/SimulationApis';
 import ServerStatusBoard from './ServerStatusBoard';
 
@@ -40,67 +39,88 @@ const mockServerInfos = [
 
 const mockDataCurrentRunning = [
   {
-    key: '1',
-    no: 1,
-    scenario: 'Scenario1',
-    simulator: 'Simulator A',
-    user: ['User1'],
-    startDate: '2021-12-20 11:32:54',
-    runningTime: 42,
-    currentRep: 3,
-    requestRep: 4,
-    serverNo: '#1',
+    key: 72,
+    group: 'Group1',
+    scenario: 'Scenario AS-IS',
+    simulator: 'ABC',
+    version: '1.0.0',
+    status: 'RUNNING',
+    user: ['ADMIN'],
+    replication: [
+      {
+        key: 42,
+        randomSeed: 1,
+        status: 'END',
+        reason: ['NORMAL'],
+        server: 1,
+        start: '2022-06-24 14:12:00',
+      },
+      {
+        key: 43,
+        randomSeed: 2,
+        status: 'RUNNING',
+        reason: ['-'],
+        server: 2,
+        start: '2022-06-24 15:12:00',
+      },
+    ],
   },
   {
-    key: '2',
-    no: 2,
-    scenario: 'Scenario2',
-    simulator: 'Simulator B',
-    user: ['User2'],
-    startDate: '2021-12-20 11:45:27',
-    runningTime: 57,
-    currentRep: 1,
-    requestRep: 2,
-    serverNo: '#2',
-  },
-  {
-    key: '3',
-    no: 3,
-    scenario: 'Scenario3',
-    simulator: 'Simulator C',
-    user: ['User3'],
-    startDate: '2021-12-20 15:23:42',
-    runningTime: 75,
-    currentRep: 3,
-    requestRep: 5,
-    serverNo: '#1',
+    key: 73,
+    group: 'Group1',
+    scenario: 'Scenario TO-BE',
+    simulator: 'ABC',
+    version: '1.0.0',
+    status: 'RUNNING',
+    user: ['ADMIN'],
+    replication: [
+      {
+        key: 44,
+        randomSeed: 1,
+        status: 'END',
+        reason: ['NORMAL'],
+        server: 1,
+        start: '2022-06-24 15:12:00',
+      },
+      {
+        key: 45,
+        randomSeed: 2,
+        status: 'RUNNING',
+        reason: ['-'],
+        server: 2,
+        start: '2022-06-24 17:12:00',
+      },
+    ],
   },
 ];
 
 const mockDataReserved = [
   {
-    key: '1',
-    no: 1,
-    scenario: 'Scenario1',
-    simulator: 'Simulator A',
-    user: ['User1'],
-    reservationDate: '2021-12-20 11:32:54',
-  },
-  {
-    key: '2',
-    no: 2,
-    scenario: 'Scenario2',
-    simulator: 'Simulator B',
-    user: ['User2'],
-    reservationDate: '2021-12-20 11:45:27',
-  },
-  {
-    key: '3',
-    no: 3,
-    scenario: 'Scenario3',
-    simulator: 'Simulator C',
-    user: ['User3'],
-    reservationDate: '2021-12-20 15:23:42',
+    key: 74,
+    group: 'Group2',
+    scenario: 'Scenario',
+    simulator: 'DEF',
+    version: '1.0.0',
+    status: 'RESERVED',
+    user: ['ADMIN'],
+    replication: [
+      {
+        key: 46,
+        randomSeed: 1,
+        status: 'RESERVED',
+        reason: ['-'],
+        server: 1,
+        start: '',
+      },
+      {
+        key: 47,
+        randomSeed: 2,
+        status: 'RESERVED',
+        reason: ['-'],
+        server: 2,
+        start: '',
+      },
+    ],
   },
 ];
 
@@ -133,10 +153,14 @@ const Summary = () => {
           <ServerStatusBoard serverInfos={mockServerInfos} />
         </section>
         <section>
-          <CurrentRunningTable currentUser={currentUser} data={currentRunning} setData={setCurrentRunning} />
+          <h4 style={{fontSize: 25}}>Current running</h4>
+          <ScenarioTable currentUser={currentUser} data={currentRunning} setData={setCurrentRunning} />
+          {/* <ScenarioTable currentUser={currentUser} data={mockDataCurrentRunning} setData={setCurrentRunning} /> */}
         </section>
         <section>
-          <ReservedTable currentUser={currentUser} data={reserved} setData={setReserved} />
+          <h4 style={{fontSize: 25}}>Reserved</h4>
+          <ScenarioTable currentUser={currentUser} data={reserved} setData={setReserved} />
+          {/* <ScenarioTable currentUser={currentUser} data={mockDataReserved} setData={setCurrentRunning} /> */}
         </section>
       </h3>
     </div>

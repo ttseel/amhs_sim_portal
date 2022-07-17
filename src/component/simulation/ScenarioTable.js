@@ -1,17 +1,71 @@
-import React, {useState} from 'react';
-import ReactDOM from 'react-dom';
+import React, {useState, useEffect} from 'react';
 import 'antd/dist/antd.css';
-import {Table, Tag, Space, Modal} from 'antd';
-import Reservation from './Reservation';
-import {cancelReservedScenarioApi} from '../../api/simulation/SimulationApis';
+import {Space, Table, Tag, Modal} from 'antd';
+import {stopSimulationApi} from '../../api/simulation/SimulationApis';
 
-const ReservedTable = ({currentUser, data, setData}) => {
-  const columns_cur_reserved = [
-    // {
-    //   title: 'No',
-    //   dataIndex: 'no',
-    //   key: 'no',
-    // },
+const ScenarioTable = ({currentUser, data, setData}) => {
+  console.log('data:' + data);
+
+  const expandedRowRender = (record, index, indent, expanded) => {
+    // console.log(record);
+    const columns_child = [
+      {
+        title: 'Random Seed',
+        dataIndex: 'randomSeed',
+        key: 'randomSeed',
+      },
+      {
+        title: 'Status',
+        dataIndex: 'status',
+        key: 'status',
+      },
+      {
+        title: 'Termination Reason',
+        dataIndex: 'reason',
+        key: 'reason',
+        render: reason => (
+          <>
+            {reason.map(reason => {
+              if (reason === '-') {
+                return <div>-</div>;
+              }
+
+              let color = '';
+              if (reason === 'NORMAL') {
+                color = 'green';
+              } else if (reason === 'ABNORMAL') {
+                color = 'red';
+              }
+
+              return (
+                <Tag color={color} key={reason}>
+                  {reason.toUpperCase()}
+                </Tag>
+              );
+            })}
+          </>
+        ),
+      },
+      {
+        title: 'Server',
+        dataIndex: 'server',
+        key: 'server',
+      },
+      {
+        title: 'Start',
+        dataIndex: 'start',
+        key: 'start',
+      },
+    ];
+
+    return (
+      <div>
+        <Table columns={columns_child} dataSource={record.replication} pagination={false} size={'large'} />
+      </div>
+    );
+  };
+
+  const columns_parent = [
     {
       title: 'Group',
       dataIndex: 'group',
@@ -33,19 +87,24 @@ const ReservedTable = ({currentUser, data, setData}) => {
       key: 'version',
     },
     {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+    },
+    {
       title: 'User',
-      dataIndex: 'user',
       key: 'user',
+      dataIndex: 'user',
       render: user => (
         <>
-          {user.map(user => {
-            let color = user.length > 5 ? 'geekblue' : 'orange';
-            if (user === currentUser) {
+          {user.map(tag => {
+            let color = tag.length > 5 ? 'geekblue' : 'orange';
+            if (tag === currentUser) {
               color = 'geekblue';
             }
             return (
-              <Tag color={color} key={user}>
-                {user.toUpperCase()}
+              <Tag color={color} key={tag}>
+                {tag.toUpperCase()}
               </Tag>
             );
           })}
@@ -53,18 +112,7 @@ const ReservedTable = ({currentUser, data, setData}) => {
       ),
     },
     {
-      title: 'Reservation Date',
-      dataIndex: 'reservationDate',
-      key: 'reservationDate',
-    },
-    {
-      title: 'Reservation Server',
-      dataIndex: 'reservationServer',
-      key: 'reservationServer',
-    },
-    {
-      title: 'Request Cancel',
-      dataIndex: 'cancel',
+      title: 'Cancel',
       key: 'cancel',
       render: (text, record) => (
         <>
@@ -85,12 +133,14 @@ const ReservedTable = ({currentUser, data, setData}) => {
   const [recordNo, setRecordNo] = useState();
   const [recordUser, setRecordUser] = useState();
   const [recordSimulator, setRecordSimulator] = useState();
+  const [recordGroup, setRecordGroup] = useState();
   const [recordScenario, setRecordScenario] = useState();
 
   const showRequestModal = record => {
     setRecordNo(record.no);
     setRecordUser(record.user);
     setRecordSimulator(record.simulator);
+    setRecordGroup(record.group);
     setRecordScenario(record.scenario);
     setModalText(`Are you sure you want to stop the ${record.scenario} that ${record.user} has reserved?`);
     setVisible(true);
@@ -108,26 +158,30 @@ const ReservedTable = ({currentUser, data, setData}) => {
     }
   };
 
+  const uniqueSimRecordDto = new FormData();
+
   function handleOk() {
     setConfirmLoading(true);
     try {
-      cancelReservedScenarioApi(recordUser, recordSimulator, recordScenario).then(response => {
+      uniqueSimRecordDto.append('user', recordUser);
+      uniqueSimRecordDto.append('group', recordGroup);
+      uniqueSimRecordDto.append('scenario', recordScenario);
+      stopSimulationApi(uniqueSimRecordDto).then(response => {
         // status 200: 서버의 응답이 성공했다는 HTTP 상태 코드
         if (response.status === 200) {
-          if (response.data === true) {
+          if (response.data.status === true) {
             showResultModal(response.data, `${recordScenario} stopped successfully`);
             removeRecordFromList();
           } else {
-            showResultModal(response.data, `Cancel request failed`);
+            showResultModal(response.data, `Stop request failed`);
           }
         } else {
-          console.log('The request to cancel reservation failed');
+          console.log('The request to stop the simualtion failed');
         }
       });
     } catch (error) {
       console.error(error);
     }
-
     setVisible(false);
     setConfirmLoading(false);
   }
@@ -142,13 +196,19 @@ const ReservedTable = ({currentUser, data, setData}) => {
     });
 
     setData(afterRemove);
-    console.log('Reservation list after remove', afterRemove);
+    console.log('Current running list after remove', afterRemove);
   };
 
   return (
     <div>
-      <h4 style={{fontSize: 25}}>Reserved</h4>
-      <Table columns={columns_cur_reserved} dataSource={data} />
+      <Table
+        columns={columns_parent}
+        expandable={{
+          expandedRowRender,
+        }}
+        dataSource={data}
+        size="middle"
+      />
       <Modal
         title={modalTitle}
         visible={visible}
@@ -162,4 +222,4 @@ const ReservedTable = ({currentUser, data, setData}) => {
   );
 };
 
-export default ReservedTable;
+export default ScenarioTable;
