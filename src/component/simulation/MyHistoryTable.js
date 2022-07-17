@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import 'antd/dist/antd.css';
 import {Table, Tag, Space, Modal} from 'antd';
 import {deleteMyHistoryApi, downloadHistoryApi} from '../../api/simulation/SimulationApis';
-import {readCurrentRunningApi, stopSimulationApi} from '../../api/simulation/SimulationApis';
+import {stopSimulationApi} from '../../api/simulation/SimulationApis';
 
 const MyHistoryTable = ({currentUser, data, setData}) => {
   console.log('data:', data);

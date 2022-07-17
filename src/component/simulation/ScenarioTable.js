@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import 'antd/dist/antd.css';
 import {Space, Table, Tag, Modal} from 'antd';
-import {readCurrentRunningApi, stopSimulationApi} from '../../api/simulation/SimulationApis';
+import {stopSimulationApi} from '../../api/simulation/SimulationApis';
 
 const ScenarioTable = ({currentUser, data, setData}) => {
   console.log('data:' + data);
