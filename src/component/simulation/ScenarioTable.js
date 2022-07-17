@@ -4,8 +4,6 @@ import {Space, Table, Tag, Modal} from 'antd';
 import {stopSimulationApi} from '../../api/simulation/SimulationApis';
 
 const ScenarioTable = ({currentUser, data, setData}) => {
-  console.log('data:' + data);
-
   const expandedRowRender = (record, index, indent, expanded) => {
     // console.log(record);
     const columns_child = [

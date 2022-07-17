@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
-import {Table, Tag, Space} from 'antd';
+import moduleCss from './MySimulation.module.css';
+import {Button, Table, Tag, Space} from 'antd';
 import ScenarioTable from './ScenarioTable';
 import MyHistoryTable from './MyHistoryTable';
 import {readCurrentRunningApi, readReservedScenarioApi, readMyHistoryApi} from '../../api/simulation/SimulationApis';
+import {readUserNameByIp, updateUserName} from '../../api/auth/AuthApis';
 
 const mockDataCurrentRunning = [
   {
@@ -124,26 +126,60 @@ const mockDataHistory = [
 ];
 
 const MySimulation = () => {
-  const [currentUser, setCurrentUser] = useState('ADMIN');
+  /*
+    Change User button
+  */
+  const changeUserButtonProps = {
+    type: 'primary',
+    style: {
+      color: 'white',
+      background: 'green',
+      borderColor: 'green',
+    },
+  };
+
+  const handleChange = () => {
+    const newUser = prompt('Please enter your name', user);
+    if (newUser != null) {
+      setUser(newUser);
+      updateUserName(newUser, ip).then(response => {
+        if (response === true) {
+          // setUser(newUser);
+        }
+      });
+    }
+  };
+
+  const [ip, setIp] = useState();
+  const [user, setUser] = useState();
   const [currentRunning, setCurrentRunning] = useState();
   const [reserved, setReserved] = useState();
   const [myHistory, setMyHistory] = useState();
   useEffect(() => {
-    readCurrentRunningApi(currentUser).then(response => {
-      console.log(`readCurrentRunningApi(${currentUser}): `, response.data);
+    readUserNameByIp().then(response => {
+      setIp(response.data.ip);
+      if (response.data.userName !== undefined && response.data.userName !== null) {
+        setUser(prev => response.data.userName);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    readCurrentRunningApi(user).then(response => {
+      console.log(`readCurrentRunningApi(${user}): `, response.data);
       setCurrentRunning(response.data);
     });
 
-    readReservedScenarioApi(currentUser).then(response => {
-      console.log(`readReservedScenarioApi(${currentUser}): `, response.data);
-      setReserved(response.data);
+    readReservedScenarioApi(user).then(response => {
+      console.log(`readReservedScenarioApi(${user}): `, response.data);
+      setReserved(prev => response.data);
     });
 
-    readMyHistoryApi(currentUser).then(response => {
-      console.log(`readMyHistoryApi(${currentUser}): `, response.data);
+    readMyHistoryApi(user).then(response => {
+      console.log(`readMyHistoryApi(${user}): `, response.data);
       setMyHistory(response.data);
     });
-  }, []);
+  }, [user]);
 
   return (
     <div>
@@ -152,19 +188,24 @@ const MySimulation = () => {
         <em>My Simulation</em>
       </h3>
       <section>
-        <h4 style={{fontSize: 25}}>Current running</h4>
-        <ScenarioTable currentUser={currentUser} data={currentRunning} setData={setCurrentRunning} />
-        {/* <ScenarioTable currentUser={currentUser} data={mockDataCurrentRunning} setData={setCurrentRunning} /> */}
+        <div className={moduleCss.change_user_container}>
+          <h4 style={{fontSize: 25}}>Current running</h4>
+          <Button {...changeUserButtonProps} onClick={() => handleChange()}>
+            Change User
+          </Button>
+        </div>
+        <ScenarioTable currentUser={user} data={currentRunning} setData={setCurrentRunning} />
+        {/* <ScenarioTable currentUser={user} data={mockDataCurrentRunning} setData={setCurrentRunning} /> */}
       </section>
       <section>
         <h4 style={{fontSize: 25}}>Reserved</h4>
-        <ScenarioTable currentUser={currentUser} data={reserved} setData={setReserved} />
-        {/* <ScenarioTable currentUser={currentUser} data={mockDataReserved} setData={setCurrentRunning} /> */}
+        <ScenarioTable currentUser={user} data={reserved} setData={setReserved} />
+        {/* <ScenarioTable currentUser={user} data={mockDataReserved} setData={setCurrentRunning} /> */}
       </section>
       <section>
         <h4 style={{fontSize: 25}}>My History</h4>
-        <MyHistoryTable currentUser={currentUser} data={myHistory} setData={setMyHistory} />
-        {/* <MyHistoryTable currentUser={currentUser} data={mockDataHistory} setData={setMyHistory} /> */}
+        <MyHistoryTable currentUser={user} data={myHistory} setData={setMyHistory} />
+        {/* <MyHistoryTable currentUser={user} data={mockDataHistory} setData={setMyHistory} /> */}
       </section>
     </div>
   );

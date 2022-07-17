@@ -5,8 +5,6 @@ import {deleteMyHistoryApi, downloadHistoryApi} from '../../api/simulation/Simul
 import {stopSimulationApi} from '../../api/simulation/SimulationApis';
 
 const MyHistoryTable = ({currentUser, data, setData}) => {
-  console.log('data:', data);
-
   const expandedRowRender = (record, index, indent, expanded) => {
     // console.log(record);
     const columns_child = [
